@@ -1,4 +1,6 @@
-﻿const double PI = 3.14159;  // constant
+﻿using MyConsoleApp;
+
+const double PI = 3.14159;  // constant
 
 int radius = 5;          // variable
 double area = PI * radius * radius;
@@ -30,3 +32,6 @@ string lastName = "Doe";
 string fullName = firstName + " " + lastName;
 Console.WriteLine("Full name (concatenation): " + fullName);
 Console.WriteLine($"Full name (interpolation): {firstName} {lastName}");
+
+SecondProgram s = new SecondProgram();
+s.SayHello();
