@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
 using MyConsoleApp;
 
@@ -163,3 +164,24 @@ Console.WriteLine("===========================");
 //     newString += aString[i] + c.ToString();
 // }
 // Console.WriteLine(newString);
+
+var list = new ArrayList(new object[] { "Hello", 1, 4, true });
+// var list3 = new ArrayList(new string[] { "Hello", "abc" });
+
+// ArrayList list1 = new ArrayList();
+// list1.Add(3);
+// list1.Add("hello");
+// Console.WriteLine(string.Join(",", list1.ToArray()));	//3,hello
+
+// list.AddRange(new[] { 3, 7 });
+// list.Insert(2, "bike");
+// list.RemoveAt(3);
+// int size = list.Count;
+// int value = (int)list[1];
+// int position = list.IndexOf(4);
+
+// ArrayList nums = new ArrayList() {1,2,3,4,5,6};
+// int count = 0;
+// foreach(int n in nums)
+//     if (n % 2 == 0) count++;
+// {"a","b","x","y",5,6} -> {"b", "a", "y", "x", 6, 5}
