@@ -208,3 +208,24 @@ Console.WriteLine("===========================");
 // string item = browserHistory.Peek();    //no remove
 // string lastVisited = browserHistory.Pop();  //remove
 // ======== Dictionary
+// Dictionary<string, int> peopleAge = new Dictionary<string, int>();
+// peopleAge.Add("mike", 45);
+// peopleAge.Add("kim", 23);
+// Console.WriteLine(peopleAge["mike"]);
+// Console.WriteLine(peopleAge.ContainsKey("mike"));
+// peopleAge.Remove("kim");
+// peopleAge.Clear();
+
+// Dictionary<string, string> capitals = new Dictionary<string, string>();
+// capitals["Japan"] = "Tokyo";
+// capitals["France"] = "Paris";
+
+// foreach (var kv in capitals)
+//     Console.WriteLine($"{kv.Key} → {kv.Value}");
+
+// dict1 = {"a": 2, "b": 3}
+// dict2 = {"b": 4, "c": 1}
+// Result → {"a":2, "b":7, "c":1}
+
+// ["hi", "apple", "cat", "dog"]
+// {2: ["hi"], 3: ["cat","dog"], 5: ["apple"]}
