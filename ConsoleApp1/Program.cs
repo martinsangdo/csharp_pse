@@ -164,8 +164,8 @@ Console.WriteLine("===========================");
 //     newString += aString[i] + c.ToString();
 // }
 // Console.WriteLine(newString);
-
-var list = new ArrayList(new object[] { "Hello", 1, 4, true });
+// ======== ArrayList
+// var list = new ArrayList(new object[] { "Hello", 1, 4, true });
 // var list3 = new ArrayList(new string[] { "Hello", "abc" });
 
 // ArrayList list1 = new ArrayList();
@@ -185,3 +185,18 @@ var list = new ArrayList(new object[] { "Hello", 1, 4, true });
 // foreach(int n in nums)
 //     if (n % 2 == 0) count++;
 // {"a","b","x","y",5,6} -> {"b", "a", "y", "x", 6, 5}
+// ======== Queue
+// Queue<string> myQueue = new Queue<string>();
+// myQueue.Enqueue("abc");
+// myQueue.Enqueue("xyz");
+// myQueue.Enqueue("hello");
+
+// Console.WriteLine("Size of queue: " + myQueue.Count); // Output: 3
+// Console.WriteLine("The first item: " + myQueue.Peek()); // Output: abc
+// Console.WriteLine("Get the first item and delete it: " + myQueue.Dequeue()); // Output: abc
+// Console.WriteLine("The second item: " + myQueue.Peek()); // Output: xyz
+
+// ======== Stack
+
+
+// ======== Dictionary
