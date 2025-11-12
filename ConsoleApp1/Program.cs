@@ -84,32 +84,32 @@ Console.WriteLine("===========================");
 // }
 
 //print empty ractangle
-for (int i = 0; i < 4; i++)
-{
-    string row = "";
-    if (i == 0 || i == 3)
-    {
-        for (int j = 0; j <= 6; j++)
-        {
-            row += " *";
-        }
-    }
-    else
-    {
-        for (int j = 0; j <= 6; j++)
-        {
-            if (j == 0 || j == 6)
-            {
-                row += " *";
-            }
-            else
-            {
-                row += "  ";
-            }
-        }
-    }
-    Console.WriteLine(row);
-}
+// for (int i = 0; i < 4; i++)
+// {
+//     string row = "";
+//     if (i == 0 || i == 3)
+//     {
+//         for (int j = 0; j <= 6; j++)
+//         {
+//             row += " *";
+//         }
+//     }
+//     else
+//     {
+//         for (int j = 0; j <= 6; j++)
+//         {
+//             if (j == 0 || j == 6)
+//             {
+//                 row += " *";
+//             }
+//             else
+//             {
+//                 row += "  ";
+//             }
+//         }
+//     }
+//     Console.WriteLine(row);
+// }
 
 // int[] a = new int[6];
 
@@ -139,3 +139,27 @@ for (int i = 0; i < 4; i++)
 //         Console.WriteLine(numbers[row, col]);
 //     }
 // }
+
+// StringProgram sp = new StringProgram();
+// sp.sample();
+
+// char[] letters = { 'H', 'e', 'l', 'l', 'o' };
+// string greeting = new string(letters, 0, 2);
+
+// string myName = "Micheal Jackson";
+// string aaa = new string('a', 10);
+
+// string myFullname = "Micheal" + " " + "Jackson";
+// string myFullnameAndAge = myFullname + " 38";
+
+// Console.WriteLine(myFullname[9]);
+// Console.WriteLine(myFullname.Length);
+
+// char c = 'x';
+// string aString = "abcd";
+// string newString = "";
+// for (int i = 0; i < aString.Length; i++)
+// {
+//     newString += aString[i] + c.ToString();
+// }
+// Console.WriteLine(newString);
