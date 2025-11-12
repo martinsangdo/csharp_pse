@@ -197,6 +197,14 @@ Console.WriteLine("===========================");
 // Console.WriteLine("The second item: " + myQueue.Peek()); // Output: xyz
 
 // ======== Stack
-
-
+// Stack<string> browserHistory = new Stack<string>();
+// browserHistory.Push("Google.com");
+// browserHistory.Push("GeeksforGeeks.org");
+// browserHistory.Push("Microsoft.com");
+// foreach (string site in browserHistory)
+// {
+//     Console.WriteLine(site);
+// }
+// string item = browserHistory.Peek();    //no remove
+// string lastVisited = browserHistory.Pop();  //remove
 // ======== Dictionary
