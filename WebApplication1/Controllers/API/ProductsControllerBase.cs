@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/product")]  //
 public class ProductsControllerBase : ControllerBase
 {
+    private readonly ProductService _productService;
+
+    public ProductsControllerBase(ProductService productService)
+    {
+        _productService = productService;
+    }
     //===== Data
     Dictionary<string, object> getSampleData(){
         return new Dictionary<string, object>
@@ -48,6 +54,14 @@ public class ProductsControllerBase : ControllerBase
     {
         string response = "Received product ID: " + product_id + " catId: " + cat_id;
         return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("external/list")]
+    public IActionResult getProductsFromExternalSource()
+    {
+        var products = _productService.getDummyProducts();
+        return Ok(products);
     }
 
     //========== POST
