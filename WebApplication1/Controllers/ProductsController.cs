@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ProductsController : Controller
 {
+    private readonly ProductService _productService;
+
+    public ProductsController(ProductService productService)
+    {
+        _productService = productService;
+    }
 
     public List<ProductDto> getSampleList()
     {
@@ -38,6 +44,12 @@ public class ProductsController : Controller
         //sample categories
         ViewBag.categories = new List<string> { "Keyboard", "Mouse", "PC", "Printer"};
         //
+        return View();
+    }
+
+    public IActionResult external_list()
+    {
+        ViewBag.products = _productService.getDummyProducts();
         return View();
     }
 

@@ -1,0 +1,22 @@
+@{
+    Layout = null;  //do not include header & fotter in shared folder (Shared/Layout.cshtml)
+}
+<html>
+    <head>
+        <title>Product list page</title>
+    </head>
+
+    <body>
+        <table border="1">
+            @foreach (var p in ViewBag.products)
+            {
+                <tr>
+                    <td><strong>@p.Name</strong></td>
+                    <td>$@p.Price</td>
+                    <td>@p.description</td>
+                    <td><img src="@p.image_url" width="100" /></td>
+                </tr>
+            }
+        </table>
+    </body>
+</html>
