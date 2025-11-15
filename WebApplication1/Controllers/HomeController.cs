@@ -17,7 +17,11 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    
+    public IActionResult hello(string myName)
+    {
+        ViewBag.name = myName;
+        return View();
+    }
 
     public IActionResult Privacy()
     {

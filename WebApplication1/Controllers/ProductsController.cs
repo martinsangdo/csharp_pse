@@ -9,7 +9,7 @@ public class ProductsController : Controller
     }
 
 
-    [Route("shop/products")]
+    [Route("shop/products")]    //custom url
     public IActionResult pageList()
     {
         return View("Product_List");    //html page
