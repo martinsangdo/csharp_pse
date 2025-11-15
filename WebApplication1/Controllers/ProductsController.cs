@@ -42,7 +42,7 @@ public class ProductsController : Controller
     {
         ViewBag.products = getSampleList();
         //sample categories
-        ViewBag.categories = new List<string> { "Keyboard", "Mouse", "PC", "Printer"};
+        ViewBag.categories = new List<string> { "Keyboard", "Mouse", "PC", "Printer" };
         //
         return View();
     }
@@ -73,5 +73,11 @@ public class ProductsController : Controller
         };
         ViewBag.detail = sampleProduct; //inject this info to view
         return View();
+    }
+    
+    [Route("products/shop")]    //custom url
+    public IActionResult showShopPage()
+    {
+        return View("~/Views/ogani/shop-grid.cshtml");
     }
 }
