@@ -23,6 +23,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult sum(int a, int b)
+    {
+        ViewBag.sum = a + b;
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();
