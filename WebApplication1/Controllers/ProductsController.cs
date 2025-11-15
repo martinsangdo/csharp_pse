@@ -7,4 +7,11 @@ public class ProductsController : Controller
     {
         return View();
     }
+
+
+    [Route("shop/products")]
+    public IActionResult pageList()
+    {
+        return View("Product_List");    //html page
+    }
 }
