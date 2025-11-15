@@ -1,9 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/product")]  //
 public class ProductsControllerBase : ControllerBase
 {
+    //===== Data
+    Dictionary<string, object> getSampleData(){
+        return new Dictionary<string, object>
+        {
+            { "name", "Keyboard" },
+            { "price", 20.5 },
+            { "description", "Mechanical keyboard" }
+        };
+    }
+
+    //===== GET
     [HttpGet]
     [Route("test")] //
     public IActionResult test(string name)
@@ -58,9 +72,9 @@ public class ProductsControllerBase : ControllerBase
     {
         using var reader = new StreamReader(Request.Body);
         var json = await reader.ReadToEndAsync();
-        var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-        Console.WriteLine(data["price"]);
-        return Ok(data["price"]);
+        var data = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
+        double finalPrice = data["price"].GetDouble() - data["price"].GetDouble() * data["percent"].GetDouble();
+        return Ok(finalPrice);
     }
     //received via Dto
     [HttpPost]
@@ -73,7 +87,13 @@ public class ProductsControllerBase : ControllerBase
         });
     }
     //========== PUT
-
+    [HttpPut("detail")]
+    public IActionResult updateDetail(string price)
+    {
+        Dictionary<string, object> detail = getSampleData();
+        detail["price"] = price;
+        return Ok(detail);
+    }
     //========== DELETE
 
 }
