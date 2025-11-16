@@ -74,11 +74,18 @@ public class ProductsController : Controller
         ViewBag.detail = sampleProduct; //inject this info to view
         return View();
     }
-    
+
     [Route("products/shop")]    //custom url
     public IActionResult showShopPage()
     {
         ViewBag.products = _productService.getDummyProducts();
         return View("~/Views/ogani/shop-grid.cshtml");
+    }
+    
+    [Route("products/shop/detail")]    //custom url
+    public IActionResult showShopDetailPage()
+    {
+        ViewBag.product = _productService.getDummyProductDetail();
+        return View("~/Views/ogani/shop-details.cshtml");
     }
 }

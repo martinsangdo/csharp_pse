@@ -33,4 +33,18 @@ public class ProductService
         }
         return products;
     }
+    //call external API
+    public ProductDto getDummyProductDetail()
+    {
+        Dictionary<string, JsonElement> rawDict = _externalService.sendGetRequest("https://dummyjson.com/products/1");
+        var product = new ProductDto
+            {
+                Id = rawDict["id"] is JsonElement jeId ? jeId.GetInt32() : 0,
+                Name = rawDict["title"] is JsonElement jeName ? jeName.GetString() ?? "" : "",
+                Price = rawDict["price"] is JsonElement jePrice ? jePrice.GetDouble() : 0,
+                description = rawDict["description"] is JsonElement jeDesc ? jeDesc.GetString() ?? "" : "",
+                image_url = rawDict["thumbnail"] is JsonElement jeImg ? jeImg.GetString() ?? "" : ""
+            };
+        return product;
+    }
 }
