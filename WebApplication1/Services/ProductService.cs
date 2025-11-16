@@ -5,10 +5,19 @@ using WebApplication1.Services;
 public class ProductService
 {
     private readonly ExternalService _externalService;
-    public ProductService(ExternalService externalService)
+    private readonly ApplicationDbContext _db;
+
+    public ProductService(ExternalService externalService, ApplicationDbContext db)
     {
         _externalService = externalService;
+        _db = db;
     }
+        
+    public List<Product> getAllProducts()
+    {
+        return _db.Product.ToList();
+    }
+
     //get dummy product from external source
     public List<ProductDto> getDummyProducts()
     {

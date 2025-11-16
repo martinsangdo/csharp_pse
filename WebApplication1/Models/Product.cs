@@ -1,13 +1,23 @@
+
+using System.ComponentModel.DataAnnotations.Schema;
+
 public class Product
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public double Price { get; set; }
-    public string description { get; set; }
-    public string image_url { get; set; }
-    public int category_id { get; set; }
+    [Column("product_id")]
+    public int ProductId { get; set; }  //auto match with product_id
 
-    public double revenue { get; set; }  //this is private info that not show to user
-    public int provider_id { get; set; }  //this is private info that not show to user
+    [Column("category_id")]
+    public int CategoryId { get; set; }
+    public string Name { get; set; }
+    public string? Description { get; set; }
+
+    public decimal Price { get; set; }
+    public int Stock { get; set; }
+    [Column("image_url")]
+    public string? ImageUrl { get; set; }
+    public string Status { get; set; } = "Active";
+
+    // public double revenue { get; set; }  //this is private info that not show to user
+    // public int provider_id { get; set; }  //this is private info that not show to user
 
 }
