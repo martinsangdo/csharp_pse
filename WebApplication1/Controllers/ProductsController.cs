@@ -78,6 +78,7 @@ public class ProductsController : Controller
     [Route("products/shop")]    //custom url
     public IActionResult showShopPage()
     {
+        ViewBag.products = _productService.getDummyProducts();
         return View("~/Views/ogani/shop-grid.cshtml");
     }
 }
