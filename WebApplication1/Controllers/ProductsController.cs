@@ -75,11 +75,29 @@ public class ProductsController : Controller
         return View();
     }
 
-    [Route("products/shop")]    //custom url
+    [Route("products/shop")]    //custom url, show list of products in homepage
     public IActionResult showShopPage()
     {
         List<Product> dbProducts = _productService.getAllProducts();
         ViewBag.products = dbProducts;  //_productService.getDummyProducts();
+        return View("~/Views/ogani/shop-grid.cshtml");
+    }
+
+    [Route("{products}")]
+    public IActionResult showShopPagination(int page = 1)   //default page is 1
+    {
+        const int pageSize = 3; //assumming 1 page displays 3 products
+        //get products
+        var products = _productService.GetListPagination(page, pageSize);
+        ViewBag.products = products.Data;
+        ViewBag.Page = products.Page;
+        ViewBag.Total = products.Total;
+        ViewBag.Limit = products.Limit;
+        //categories
+        // ViewBag.categories = _productService.getLeafCategories();
+
+        // ViewBag.brands = _productService.getTopBrands();
+
         return View("~/Views/ogani/shop-grid.cshtml");
     }
     

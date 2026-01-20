@@ -12,7 +12,7 @@ public class ProductService
         _externalService = externalService;
         _db = db;
     }
-        
+
     public List<Product> getAllProducts()
     {
         return _db.Product.ToList();
@@ -47,13 +47,37 @@ public class ProductService
     {
         Dictionary<string, JsonElement> rawDict = _externalService.sendGetRequest("https://dummyjson.com/products/1");
         var product = new ProductDto
-            {
-                Id = rawDict["id"] is JsonElement jeId ? jeId.GetInt32() : 0,
-                Name = rawDict["title"] is JsonElement jeName ? jeName.GetString() ?? "" : "",
-                Price = rawDict["price"] is JsonElement jePrice ? jePrice.GetDouble() : 0,
-                description = rawDict["description"] is JsonElement jeDesc ? jeDesc.GetString() ?? "" : "",
-                image_url = rawDict["thumbnail"] is JsonElement jeImg ? jeImg.GetString() ?? "" : ""
-            };
+        {
+            Id = rawDict["id"] is JsonElement jeId ? jeId.GetInt32() : 0,
+            Name = rawDict["title"] is JsonElement jeName ? jeName.GetString() ?? "" : "",
+            Price = rawDict["price"] is JsonElement jePrice ? jePrice.GetDouble() : 0,
+            description = rawDict["description"] is JsonElement jeDesc ? jeDesc.GetString() ?? "" : "",
+            image_url = rawDict["thumbnail"] is JsonElement jeImg ? jeImg.GetString() ?? "" : ""
+        };
         return product;
+    }
+    
+    public PagedResult<Product> GetListPagination(int page, int pageSize)
+    {
+        if (page < 1) page = 1;
+
+        var query = _db.Product
+                    .Where(p => p.Status == "Active")
+                    .OrderBy(p => p.ProductId);
+
+        int totalItems = query.Count();
+
+        var items = query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+        return new PagedResult<Product>
+        {
+            Page = page,
+            Limit = pageSize,
+            Total = totalItems,
+            Data = items
+        };
     }
 }
