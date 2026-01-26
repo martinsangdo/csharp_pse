@@ -19,4 +19,21 @@ public class DemoControllerBase : ControllerBase    //must have public
         }
         return Ok(parts);
     }
+    //cut a string to x parts
+    [HttpGet]
+    [Route("string/common")]
+    public IActionResult findCommonCharactersInStrings(string str1, string str2)
+    {
+        List<char> common = new List<char>();
+
+        foreach (char c in str1)
+        {
+            if (str2.Contains(c) && !common.Contains(c))
+            {
+                common.Add(c);
+            }
+        }
+        
+        return Ok(common);
+    }
 }

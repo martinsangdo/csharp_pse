@@ -35,6 +35,8 @@ public class HomeController : Controller
         List<String> numbers = new List<String>() { "Mercedes", "Honda", "BMW" };
         ViewBag.Numbers = numbers;
 
+        ViewBag.categories = new List<string> { "Keyboard", "Mouse", "PC", "Printer"};
+
         return View();
     }
 

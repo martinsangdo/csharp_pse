@@ -13,8 +13,14 @@
 </ul>
 
 <select>
-@foreach (String n in ViewBag.Numbers)
+@* @foreach (String n in ViewBag.Numbers)
 {
     <option>@n</option>
-}
+} *@
 </select>
+<br/>
+<br/>
+@foreach (String n in ViewBag.categories)
+{
+    <input type="radio" name="rdo1"/> @n<br/>
+}
