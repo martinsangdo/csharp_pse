@@ -31,6 +31,10 @@ public class HomeController : Controller
 
     public IActionResult Privacy()
     {
+        // List<int> numbers = new List<int>() { 2, 4, 6, 8, 10 };
+        List<String> numbers = new List<String>() { "Mercedes", "Honda", "BMW" };
+        ViewBag.Numbers = numbers;
+
         return View();
     }
 

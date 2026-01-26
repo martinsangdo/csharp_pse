@@ -4,3 +4,17 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<ul>
+@* @foreach (int n in ViewBag.Numbers)
+{
+    <li>@n</li>
+} *@
+</ul>
+
+<select>
+@foreach (String n in ViewBag.Numbers)
+{
+    <option>@n</option>
+}
+</select>
