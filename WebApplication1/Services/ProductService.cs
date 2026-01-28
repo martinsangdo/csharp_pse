@@ -57,21 +57,15 @@ public class ProductService
         return product;
     }
     
-    public PagedResult<Product> GetListPagination(int page, int pageSize)
-    {
-        if (page < 1) page = 1;
-
+    public PagedResult<Product> GetListPagination(int page, int pageSize){
         var query = _db.Product
                     .Where(p => p.Status == "Active")
                     .OrderBy(p => p.ProductId);
-
         int totalItems = query.Count();
-
         var items = query
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
-
         return new PagedResult<Product>
         {
             Page = page,
