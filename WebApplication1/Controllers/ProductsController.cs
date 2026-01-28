@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 public class ProductsController : Controller
 {
     private readonly ProductService _productService;
+    private readonly CategoryService _categoryService;
 
-    public ProductsController(ProductService productService)
+    public ProductsController(ProductService productService, CategoryService categoryService)
     {
         _productService = productService;
+        _categoryService = categoryService;
     }
 
     public List<ProductDto> getSampleList()
@@ -83,6 +85,7 @@ public class ProductsController : Controller
         return View("~/Views/ogani/shop-grid.cshtml");
     }
 
+    //Product list
     [Route("/products/{page}")]
     public IActionResult showShopPagination(int page = 1)   //default page is 1
     {
@@ -94,6 +97,8 @@ public class ProductsController : Controller
         ViewBag.Total = products.Total;
         ViewBag.TotalPage = products.Total / pageSize;
         ViewBag.Limit = products.Limit;
+        //get categories
+        ViewBag.categories = _categoryService.getLeafCategories();
 
         return View("~/Views/ogani/shop-grid.cshtml");
     }
