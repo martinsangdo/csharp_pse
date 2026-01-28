@@ -92,6 +92,7 @@ public class ProductsController : Controller
         ViewBag.products = products.Data;
         ViewBag.Page = products.Page;
         ViewBag.Total = products.Total;
+        ViewBag.TotalPage = products.Total / pageSize;
         ViewBag.Limit = products.Limit;
 
         return View("~/Views/ogani/shop-grid.cshtml");

@@ -25,6 +25,9 @@ Layout = null;
     <link rel="stylesheet" href="~/ogani/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="~/ogani/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="~/ogani/css/style.css" type="text/css">
+    <style>
+        a.active {background-color:#7fad29; color: white;}
+    </style>
 </head>
 
 <body>
@@ -575,12 +578,41 @@ Layout = null;
                             </div>
                         }
                     </div>
-                    <div class="product__pagination">
+                    @* <div class="product__pagination">
                         <a href="#">1</a>
                         <a href="#">2</a>
                         <a href="#">3</a>
                         <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                    </div> *@
+
+                    <div class="product__pagination">
+                        @if (ViewBag.Page > 1)
+                        {
+                            <a href="@Url.Action("showShopPagination", "Products", new { page = ViewBag.Page - 1 })">
+                                <i class="fa fa-long-arrow-left"></i>
+                            </a>
+                        }
+
+                        @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                        {
+                            if (i == ViewBag.Page)
+                            {
+                                <a class="active" href="#">@i</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("showShopPagination", "Products", new { page = i })">@i</a>
+                            }
+                        }
+
+                        @if (ViewBag.Page < ViewBag.TotalPage)
+                        {
+                            <a href="@Url.Action("showShopPagination", "Products", new { page = ViewBag.Page + 1 })">
+                                <i class="fa fa-long-arrow-right"></i>
+                            </a>
+                        }
                     </div>
+
                 </div>
             </div>
         </div>

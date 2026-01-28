@@ -17,9 +17,11 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [Route("hello/name")]
     public IActionResult hello(string myName)
     {
         ViewBag.name = myName;
+        ViewBag.age = 18;
         return View();
     }
 
