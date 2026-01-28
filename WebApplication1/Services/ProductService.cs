@@ -56,8 +56,9 @@ public class ProductService
         };
         return product;
     }
-    
-    public PagedResult<Product> GetListPagination(int page, int pageSize){
+
+    public PagedResult<Product> GetListPagination(int page, int pageSize)
+    {
         var query = _db.Product
                     .Where(p => p.Status == "Active")
                     .OrderBy(p => p.ProductId);
@@ -73,5 +74,13 @@ public class ProductService
             Total = totalItems,
             Data = items
         };
+    }
+    
+    public List<Product> GetAllProductsByCategory(int categoryId){
+        var query = _db.Product
+                    .Where(p => p.CategoryId == categoryId)
+                    .OrderBy(p => p.ProductId);
+        var items = query.ToList();
+        return items;
     }
 }

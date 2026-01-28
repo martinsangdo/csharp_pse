@@ -16,8 +16,8 @@ public class CategoryService
     public List<Category> getLeafCategories()
     {
         var childCategories = _db.Category
-                            //   .Where(c => c.ParentCategoryID != null)
-                            //   .Take(6)
+                              //   .Where(c => c.ParentCategoryID != null)
+                              //   .Take(6)
                               .ToList();
         return childCategories;
     }

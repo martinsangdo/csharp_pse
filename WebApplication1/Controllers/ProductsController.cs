@@ -102,11 +102,23 @@ public class ProductsController : Controller
 
         return View("~/Views/ogani/shop-grid.cshtml");
     }
-    
+
     [Route("products/shop/detail")]    //custom url
     public IActionResult showShopDetailPage()
     {
         ViewBag.product = _productService.getDummyProductDetail();
         return View("~/Views/ogani/shop-details.cshtml");
+    }
+    
+    //Product list of 1 category
+    [Route("/category/{categoryID}")]
+    public IActionResult getProductsByCategory(int categoryID = 1)   //default category id
+    {
+        var products = _productService.GetAllProductsByCategory(categoryID);
+        ViewBag.products = products;
+        //get categories
+        ViewBag.categories = _categoryService.getLeafCategories();
+        
+        return View("~/Views/ogani/category.cshtml");
     }
 }
