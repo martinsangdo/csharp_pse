@@ -83,7 +83,7 @@ public class ProductsController : Controller
         return View("~/Views/ogani/shop-grid.cshtml");
     }
 
-    [Route("{products}")]
+    [Route("/products/{page}")]
     public IActionResult showShopPagination(int page = 1)   //default page is 1
     {
         const int pageSize = 3; //assumming 1 page displays 3 products
@@ -93,10 +93,6 @@ public class ProductsController : Controller
         ViewBag.Page = products.Page;
         ViewBag.Total = products.Total;
         ViewBag.Limit = products.Limit;
-        //categories
-        // ViewBag.categories = _productService.getLeafCategories();
-
-        // ViewBag.brands = _productService.getTopBrands();
 
         return View("~/Views/ogani/shop-grid.cshtml");
     }
