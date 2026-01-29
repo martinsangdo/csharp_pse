@@ -256,7 +256,7 @@ Layout = null;
                             <h4>Categories</h4>
                             <ul>
                                 @foreach (var c in ViewBag.categories){
-                                    <li><a href="/category/@c.CategoryID">@c.Name</a></li>
+                                    <li><a href="/category/@c.CategoryID">@c.Name (@c.TotalProducts)</a></li>
                                 }
                             </ul>
                         </div>
