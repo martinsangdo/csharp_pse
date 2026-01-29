@@ -97,6 +97,10 @@ public class ProductsController : Controller
         ViewBag.Total = products.Total;
         ViewBag.TotalPage = products.Total / pageSize;
         ViewBag.Limit = products.Limit;
+
+        //get products that have largest stock
+        var productsHasBigStock = _productService.GetProductsHasBigStock();
+        ViewBag.latestProducts = productsHasBigStock;
         //get categories
         ViewBag.categories = _categoryService.getLeafCategories();
 

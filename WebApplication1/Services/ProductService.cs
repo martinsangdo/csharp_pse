@@ -75,8 +75,21 @@ public class ProductService
             Data = items
         };
     }
+
+    public List<Product> GetProductsHasBigStock()
+    {
+        var query = _db.Product
+                    .Where(p => p.Status == "Active")
+                    .OrderBy(p => p.Stock);
+        int totalItems = query.Count();
+        var items = query
+                    .Take(6)
+                    .ToList();
+        return items;
+    }
     
-    public List<Product> GetAllProductsByCategory(int categoryId){
+    public List<Product> GetAllProductsByCategory(int categoryId)
+    {
         var query = _db.Product
                     .Where(p => p.CategoryId == categoryId)
                     .OrderBy(p => p.ProductId);
