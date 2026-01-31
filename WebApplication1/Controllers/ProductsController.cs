@@ -130,7 +130,19 @@ public class ProductsController : Controller
     [Route("products/detail/{id}")]
     public IActionResult getProductDetailById(int id)
     {
-        ViewBag.product = _productService.GetProductDetailById(id);
+        Product? product = _productService.GetProductDetailById(id);
+        if (product is null)
+        {
+            //todo show the error page
+            return View("~/Views/Home/error.cshtml");
+        }
+        ViewBag.product = product;
+        //search product in same categories
+        List<Product> relatedProducts = _productService.getProductsInSameCategory(id, product.CategoryId);
+        ViewBag.relatedProducts = relatedProducts;
+        //search comments
+
+        //
         return View("~/Views/ogani/product_detail.cshtml");
     }
 }

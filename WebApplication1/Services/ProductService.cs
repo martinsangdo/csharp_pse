@@ -102,4 +102,14 @@ public class ProductService
     {
         return _db.Product.FirstOrDefault(p => p.ProductId == id);  //return null if not found
     }
+
+    //get other products in same category, except the current one
+    public List<Product> getProductsInSameCategory(int excludeProductId, int categoryId)
+    {
+        var query = _db.Product
+                    .Where(p => p.CategoryId == categoryId && p.ProductId != excludeProductId)
+                    .Take(4);
+        var items = query.ToList();
+        return items;
+    }
 }
