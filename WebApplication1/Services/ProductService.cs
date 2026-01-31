@@ -87,7 +87,7 @@ public class ProductService
                     .ToList();
         return items;
     }
-    
+
     public List<Product> GetAllProductsByCategory(int categoryId)
     {
         var query = _db.Product
@@ -95,5 +95,11 @@ public class ProductService
                     .OrderBy(p => p.ProductId);
         var items = query.ToList();
         return items;
+    }
+
+    //get product by id
+    public Product? GetProductDetailById(int id)
+    {
+        return _db.Product.FirstOrDefault(p => p.ProductId == id);  //return null if not found
     }
 }
