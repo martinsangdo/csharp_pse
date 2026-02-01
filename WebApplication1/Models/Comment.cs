@@ -11,7 +11,7 @@ public class Comment
 
     [Column("user_id")]
     public int UserId { get; set; }
-    public float Rate { get; set; }
+    public double Rate { get; set; }
     public string? Content { get; set; }
 
     [Column("created_at")]

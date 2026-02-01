@@ -6,11 +6,14 @@ public class ProductsController : Controller
 {
     private readonly ProductService _productService;
     private readonly CategoryService _categoryService;
+    private readonly CommentService _commentService;
 
-    public ProductsController(ProductService productService, CategoryService categoryService)
+    public ProductsController(ProductService productService, CategoryService categoryService,
+        CommentService commentService)
     {
         _productService = productService;
         _categoryService = categoryService;
+        _commentService = commentService;
     }
 
     public List<ProductDto> getSampleList()
@@ -141,7 +144,9 @@ public class ProductsController : Controller
         List<Product> relatedProducts = _productService.getProductsInSameCategory(id, product.CategoryId);
         ViewBag.relatedProducts = relatedProducts;
         //search comments
-
+        List<Comment> dbComments = _commentService.getCommentsOfProduct(id);
+        ViewBag.comments = dbComments;
+        ViewBag.comment_count = dbComments.Count();
         //
         return View("~/Views/ogani/product_detail.cshtml");
     }

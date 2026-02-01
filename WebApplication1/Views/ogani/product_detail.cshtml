@@ -324,7 +324,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                    aria-selected="false">Reviews <span>(3)</span></a>
+                                    aria-selected="false">Reviews (<span id=”total_comment”>@ViewBag.comment_count</span>)</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -358,21 +358,13 @@
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <ul>
-                                        <div>
-                                            <strong>2026-01-31 4:23:22</strong><br/>
-                                            This product is super good
-                                            <hr />
-                                        </div>
-                                        <div>
-                                            <strong>2026-02-01 2:23:17</strong><br/>
-                                            Not good as expected
-                                            <hr />
-                                        </div>
-                                        <div>
-                                            <strong>2026-02-01 4:12:00</strong><br/>
-                                            I like this product so much
-                                            <hr />
-                                        </div>
+                                        @foreach (var c in ViewBag.comments){
+                                            <div>
+                                                <strong>@c.CreatedAt</strong><br/>
+                                                @c.Content
+                                                <hr />
+                                            </div>
+                                        }
                                     </ul>
                                     <div>
                                         <textarea cols="50" rows="3" id="txt_comment_input"></textarea></br>
