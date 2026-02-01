@@ -24,6 +24,23 @@
     <link rel="stylesheet" href="~/ogani/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="~/ogani/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="~/ogani/css/style.css" type="text/css">
+    <script>
+        function submitComment(productId) {
+            const data = {
+                productId: productId,
+                content: document.getElementById("txt_comment_input").value
+            };
+            fetch("/api/product/comment/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(() => {
+                console.log('Comment is saved');
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -359,7 +376,7 @@
                                     </ul>
                                     <div>
                                         <textarea cols="50" rows="3" id="txt_comment_input"></textarea></br>
-                                        <input type="button" value="Comment" onclick="do_comment();"/>
+                                        <input type="button" value="Comment" onclick="submitComment(@ViewBag.product.ProductId);"/>
                                     </div>
                                 </div>
                             </div>

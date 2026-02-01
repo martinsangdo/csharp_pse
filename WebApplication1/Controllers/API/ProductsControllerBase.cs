@@ -8,13 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 public class ProductsControllerBase : ControllerBase
 {
     private readonly ProductService _productService;
+    private readonly CommentService _commentService;
 
-    public ProductsControllerBase(ProductService productService)
+    public ProductsControllerBase(ProductService productService, CommentService commentService)
     {
         _productService = productService;
+        _commentService = commentService;
     }
     //===== Data
-    Dictionary<string, object> getSampleData(){
+    Dictionary<string, object> getSampleData()
+    {
         return new Dictionary<string, object>
         {
             { "name", "Keyboard" },
@@ -81,7 +84,7 @@ public class ProductsControllerBase : ControllerBase
         var json = await reader.ReadToEndAsync();
         return Ok(json);
     }
-    
+
     [HttpPost("discount")]
     public async Task<IActionResult> calculateDiscount()
     {
@@ -95,7 +98,7 @@ public class ProductsControllerBase : ControllerBase
     [HttpPost]
     public IActionResult CreateProduct([FromBody] ProductDto product)
     {
-        return Ok(new 
+        return Ok(new
         {
             Message = "Product received",
             Data = product
@@ -109,6 +112,21 @@ public class ProductsControllerBase : ControllerBase
         detail["price"] = price;
         return Ok(detail);
     }
-    //========== DELETE
+    //========== 
+    //create new product comment
+    [HttpPost]
+    [Route("comment/create")]
+    public IActionResult CreateComment([FromBody] CreateCommentDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Content))
+            return BadRequest(new{success= true, message = "Invalid data"});
+
+        int rowAffected = _commentService.CreateComment(dto);
+        if (rowAffected > 0)
+        {
+            return Ok(new{success= true});
+        }
+        return BadRequest(new{success= false});
+    }
 
 }
