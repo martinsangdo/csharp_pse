@@ -63,6 +63,16 @@
                 document.getElementById('total_comment').innerHTML = total_comment + 1;
             });
         }
+        //toggleLike(@ViewBag.product.ProductId);" class="heart-icon"><span id="icon_like" class="icon_heart_alt
+        //like or unlike the product, depend on the class of icon
+        function toggleLike(product_id){
+            var icoLike = document.getElementById('icon_like');
+            console.log(icoLike.className);
+            //store in localstorage
+            localStorage.setItem('product' + product_id, 1);
+            //update class
+            icoLike.className = 'icon_heart';
+        }
     </script>
 </head>
 
@@ -318,7 +328,7 @@
                             </div>
                         </div>
                         <a href="#" class="primary-btn">ADD TO CARD</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <a href="javascript:toggleLike(@ViewBag.product.ProductId);" class="heart-icon"><span id="icon_like" class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
