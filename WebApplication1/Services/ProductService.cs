@@ -112,4 +112,16 @@ public class ProductService
         var items = query.ToList();
         return items;
     }
+
+    public void convertSlugForAllProducts()
+    {
+        //get all products
+        var items = _db.Product.ToList();
+        foreach (var product in items)
+        {
+            product.Slug = Utils.ToSlug(product.Name);
+            _db.Product.Update(product);
+            _db.SaveChanges();
+        }
+    }
 }

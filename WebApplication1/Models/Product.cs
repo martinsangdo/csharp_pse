@@ -17,6 +17,8 @@ public class Product
     public string? ImageUrl { get; set; }
     public string Status { get; set; } = "Active";
 
+    public string? Slug { get; set; }
+
     // public double revenue { get; set; }  //this is private info that not show to user
     // public int provider_id { get; set; }  //this is private info that not show to user
 

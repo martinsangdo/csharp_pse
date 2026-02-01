@@ -119,14 +119,21 @@ public class ProductsControllerBase : ControllerBase
     public IActionResult CreateComment([FromBody] CreateCommentDto dto)
     {
         if (string.IsNullOrWhiteSpace(dto.Content))
-            return BadRequest(new{success= true, message = "Invalid data"});
+            return BadRequest(new { success = true, message = "Invalid data" });
 
         int rowAffected = _commentService.CreateComment(dto);
         if (rowAffected > 0)
         {
-            return Ok(new{success= true});
+            return Ok(new { success = true });
         }
-        return BadRequest(new{success= false});
+        return BadRequest(new { success = false });
     }
 
+    //convert slug for all products
+    [HttpPut("convert-slugs")]
+    public IActionResult convertSlugForAllProducts()
+    {
+        _productService.convertSlugForAllProducts();
+        return Ok();
+    }
 }
