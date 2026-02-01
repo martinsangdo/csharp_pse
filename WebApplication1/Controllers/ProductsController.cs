@@ -147,6 +147,9 @@ public class ProductsController : Controller
         List<Comment> dbComments = _commentService.getCommentsOfProduct(id);
         ViewBag.comments = dbComments;
         ViewBag.comment_count = dbComments.Count();
+
+        //
+        // Console.WriteLine(Utils.ToSlug("this Shop is TOO HIGh"));
         //
         return View("~/Views/ogani/product_detail.cshtml");
     }

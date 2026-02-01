@@ -67,6 +67,7 @@
         //like or unlike the product, depend on the class of icon
         function toggleLike(product_id){
             var icoLike = document.getElementById('icon_like');
+            //todo: check whether status is liked or unliked
             console.log(icoLike.className);
             //store in localstorage
             localStorage.setItem('product' + product_id, 1);
