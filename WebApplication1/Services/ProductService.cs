@@ -130,10 +130,18 @@ public class ProductService
         }
     }
 
-    public List<Product> SearchProducts(string keyword)
+    public List<Product> SearchProductsByKeyword(string keyword)
     {
         var query = _db.Product
                     .Where(p => p.Name.Contains(keyword));   //case insensitive
+        var items = query.ToList();
+        return items;
+    }
+
+    public List<Product> SearchProductsByPrice(int min, int max)
+    {
+        var query = _db.Product
+                    .Where(p => p.Price >= min && p.Price <= max);
         var items = query.ToList();
         return items;
     }

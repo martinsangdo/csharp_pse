@@ -178,12 +178,30 @@ public class ProductsController : Controller
     }
 
     [Route("products/search")]
-    public IActionResult searchProducts(string keyword)
+    public IActionResult searchProductsByKeyword(string keyword)
     {
         //get products
-        var products = _productService.SearchProducts(keyword);
+        var products = _productService.SearchProductsByKeyword(keyword);
         ViewBag.products = products;
         ViewBag.keyword = keyword;
+
+        //get products that have largest stock
+        var productsHasBigStock = _productService.GetProductsHasBigStock();
+        ViewBag.latestProducts = productsHasBigStock;
+        //get categories
+        ViewBag.categories = _categoryService.getLeafCategories();
+
+        return View("~/Views/ogani/search_results.cshtml");
+    }
+
+    [Route("products/search-by-price")]
+    public IActionResult searchProductsByPrice(int min, int max)
+    {
+        //get products
+        var products = _productService.SearchProductsByPrice(min, max);
+        ViewBag.products = products;
+        ViewBag.min = min;
+        ViewBag.max = max;
 
         //get products that have largest stock
         var productsHasBigStock = _productService.GetProductsHasBigStock();

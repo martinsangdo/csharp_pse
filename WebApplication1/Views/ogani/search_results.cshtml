@@ -27,6 +27,17 @@ Layout = null;
     <link rel="stylesheet" href="~/ogani/css/style.css" type="text/css">
     <style>
         a.active {background-color:#7fad29; color: white;}
+        
+        .names_popup {
+            width: 500px;
+            background-color: rgb(221, 218, 218);
+            position: absolute;
+            top: 190px;
+            left: 600px;
+            padding: 10px;
+            color:black;
+        }
+
     </style>
     <script>
         //
@@ -260,8 +271,8 @@ Layout = null;
                                 </div>
                                 <div class="range-slider">
                                     <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
+                                        <input type="text" id="minamount" value="@(ViewBag.min != null ? ViewBag.min : 9)">
+                                        <input type="text" id="maxamount" value="@(ViewBag.max != null ? ViewBag.max : 49)">
                                     </div>
                                 </div>
                             </div>
@@ -430,7 +441,12 @@ Layout = null;
     <script src="~/ogani/js/owl.carousel.min.js"></script>
     <script src="~/ogani/js/main.js"></script>
 
-
+    <div class="names_popup" id="names_popup">
+        <ul>
+            <li><a href="">111</a></li>
+            <li><a href="">222</a></li>
+        </ul>
+    </div>
 
 </body>
 

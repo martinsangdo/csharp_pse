@@ -175,6 +175,11 @@
         slide: function (event, ui) {
             minamount.val('$' + ui.values[0]);
             maxamount.val('$' + ui.values[1]);
+        },
+        stop: function (event, ui) {
+            console.log("Stopped at:", ui.value);
+            //navigate the the search page with min/max value
+            window.location.href = '/products/search-by-price?min=' +ui.values[0] + '&max=' + ui.values[1]; 
         }
     });
     minamount.val('$' + rangeSlider.slider("values", 0));
