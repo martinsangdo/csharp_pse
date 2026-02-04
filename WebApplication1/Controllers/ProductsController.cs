@@ -153,4 +153,44 @@ public class ProductsController : Controller
         //
         return View("~/Views/ogani/product_detail.cshtml");
     }
+
+    //get detail from db
+    [Route("product/{slug}")]
+    public IActionResult getProductDetailBySlug(string slug)
+    {
+        Product? product = _productService.GetProductDetailBySlug(slug);
+        if (product is null)
+        {
+            //todo show the error page
+            return View("~/Views/Home/error.cshtml");
+        }
+        ViewBag.product = product;
+        //search product in same categories
+        List<Product> relatedProducts = _productService.getProductsInSameCategory(product.ProductId, product.CategoryId);
+        ViewBag.relatedProducts = relatedProducts;
+        //search comments
+        List<Comment> dbComments = _commentService.getCommentsOfProduct(product.ProductId);
+        ViewBag.comments = dbComments;
+        ViewBag.comment_count = dbComments.Count();
+
+        //
+        return View("~/Views/ogani/product_detail.cshtml");
+    }
+
+    [Route("products/search")]
+    public IActionResult searchProducts(string keyword)
+    {
+        //get products
+        var products = _productService.SearchProducts(keyword);
+        ViewBag.products = products;
+        ViewBag.keyword = keyword;
+
+        //get products that have largest stock
+        var productsHasBigStock = _productService.GetProductsHasBigStock();
+        ViewBag.latestProducts = productsHasBigStock;
+        //get categories
+        ViewBag.categories = _categoryService.getLeafCategories();
+        
+        return View("~/Views/ogani/search_results.cshtml");
+    }
 }

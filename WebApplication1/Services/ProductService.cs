@@ -103,6 +103,11 @@ public class ProductService
         return _db.Product.FirstOrDefault(p => p.ProductId == id);  //return null if not found
     }
 
+    public Product? GetProductDetailBySlug(string slug)
+    {
+        return _db.Product.FirstOrDefault(p => p.Slug == slug);  //return null if not found
+    }
+
     //get other products in same category, except the current one
     public List<Product> getProductsInSameCategory(int excludeProductId, int categoryId)
     {
@@ -123,5 +128,13 @@ public class ProductService
             _db.Product.Update(product);
             _db.SaveChanges();
         }
+    }
+
+    public List<Product> SearchProducts(string keyword)
+    {
+        var query = _db.Product
+                    .Where(p => p.Name.Contains(keyword));   //case insensitive
+        var items = query.ToList();
+        return items;
     }
 }
