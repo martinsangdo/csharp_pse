@@ -214,11 +214,13 @@
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
         if ($button.hasClass('inc')) {
-            var newVal = parseFloat(oldValue) + 1;
+            //todo: call API to check "stock" in database before increasing value
+            //...
+            var newVal = parseFloat(oldValue) + 1;  //increase the value
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
+                var newVal = parseFloat(oldValue) - 1;  //decrease the value
             } else {
                 newVal = 0;
             }
