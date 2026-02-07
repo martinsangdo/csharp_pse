@@ -474,6 +474,19 @@ Layout = null;
                         ${item.name}
                     </a></li>
                 `).join("");
+                //highlight
+                ul.innerHTML = items.map(item => {
+                    const regex = new RegExp(keyword, "gi");    //case-insensitive, and all matches
+                    const highlighted = item.name.replace(regex, match => `<strong>${match}</strong>`);
+                    return `
+                        <li>
+                        <a href="/product/${item.slug}">
+                            ${highlighted}
+                        </a>
+                        </li>
+                    `;
+                    }).join("");
+
 
                 div_names_popup.style.display = "block";    //show the popup with names
             });
