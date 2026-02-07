@@ -36,11 +36,16 @@ Layout = null;
             left: 600px;
             padding: 10px;
             color:black;
+            display:none;
+        }
+
+        .names_popup ul {
+            list-style-type: none;
         }
 
     </style>
     <script>
-        //
+        //navigate to new page
         function submit_search(){
             var keyword = document.getElementById('txt_keyword').value;
             if (keyword.length < 2)
@@ -228,7 +233,7 @@ Layout = null;
                                     All Categories
                                     <span class="arrow_carrot-down"></span>
                                 </div>
-                                <input type="text" placeholder="What do you need?" id="txt_keyword" value="@ViewBag.keyword">
+                                <input type="text" placeholder="What do you need?" id="txt_keyword" value="@ViewBag.keyword"/>
                                 <button type="button" class="site-btn" onclick="submit_search();">SEARCH</button>
                             </form>
                         </div>
@@ -441,13 +446,54 @@ Layout = null;
     <script src="~/ogani/js/owl.carousel.min.js"></script>
     <script src="~/ogani/js/main.js"></script>
 
-    <div class="names_popup" id="names_popup">
-        <ul>
-            <li><a href="">111</a></li>
-            <li><a href="">222</a></li>
+    <div class="names_popup" id="div_names_popup">
+        <ul id="ul_names_popup">
         </ul>
     </div>
+    <script>
+        //dynamic search
+        const searchInput = document.getElementById("txt_keyword");
+        const div_names_popup = document.getElementById("div_names_popup");
+        var typingTimer;
+        const delay = 400; // ms to avoid user types too fast
 
+        function do_ajax_search(keyword){
+            fetch('/api/product/search?keyword=' + keyword)
+            .then(res => res.json())
+            .then(items => {
+                if (items.length == 0){
+                    //no data return, hide the popup
+                    div_names_popup.style.display = "none";
+                    return;
+                }
+                //show list of names
+                const ul = document.getElementById("ul_names_popup");
+                ul.innerHTML = '';  //clear old data
+                ul.innerHTML = items.map(item => `
+                    <li><a href="/product/${item.slug}">
+                        ${item.name}
+                    </a></li>
+                `).join("");
+
+                div_names_popup.style.display = "block";    //show the popup with names
+            });
+        }
+
+        searchInput.addEventListener("keyup", function () {
+            clearTimeout(typingTimer);
+
+            if (this.value.trim() !== "") {
+                typingTimer = setTimeout(() => {
+                    do_ajax_search(this.value.trim());
+                }, delay);
+                //
+                div_names_popup.style.display = "block";
+            } else {
+                div_names_popup.style.display = "none"; //hide the popup
+            }
+        });
+    </script>
+    
 </body>
 
 </html>

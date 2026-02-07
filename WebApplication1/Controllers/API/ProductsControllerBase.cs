@@ -136,4 +136,13 @@ public class ProductsControllerBase : ControllerBase
         _productService.convertSlugForAllProducts();
         return Ok();
     }
+
+    [Route("search")]
+    public IActionResult searchProductsByKeyword(string keyword)
+    {
+        //get products
+        var products = _productService.SearchProductsByKeyword(keyword);
+
+        return Ok(products);
+    }
 }
