@@ -12,6 +12,9 @@ public class Product
     public string? Description { get; set; }
 
     public decimal Price { get; set; }
+    public decimal SalesPrice { get; set; }
+    public DateTime? ProducedDate { get; set; }
+
     public int Stock { get; set; }
     [Column("image_url")]
     public string? ImageUrl { get; set; }

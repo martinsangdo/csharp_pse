@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-public class CreateProductDto
+public class CreateProductDto : IValidatableObject
 {
     [Required(ErrorMessage = "Product name is required.")]
     [StringLength(100, MinimumLength = 3,
@@ -25,6 +25,9 @@ public class CreateProductDto
         ErrorMessage = "Category must be valid.")]
     public int category_id { get; set; }
 
+    public decimal SalesPrice { get; set; }
+    public DateTime? ProducedDate { get; set; } //null for datetime2
+
     // [EmailAddress]
     // public string Email { get; set; }
 
@@ -35,5 +38,42 @@ public class CreateProductDto
     // [RegularExpression(@"^(?=.*[A-Z])(?=.*\d).{8,}$",
     //     ErrorMessage = "Password must contain at least 8 characters, one uppercase letter and one number.")]
     // public string Password { get; set; }
+
+    //custom validation
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        foreach (var error in ValidateSalesPrice())
+            yield return error;     //return in a list
+        foreach (var error in ValidateDates())
+            yield return error;
+    }
+    private IEnumerable<ValidationResult> ValidateSalesPrice()
+    {
+        if (SalesPrice > Price)
+            yield return new ValidationResult("Invalid sales price");
+    }
+    private IEnumerable<ValidationResult> ValidateDates()
+    {
+        if (ProducedDate > DateTime.Now)
+            yield return new ValidationResult("Invalid produced datetime");
+    }
+
+    //merge 2 methods into 1
+    // public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    // {
+    //     if (SalesPrice > Price)
+    //     {
+    //         yield return new ValidationResult(
+    //             "Discount cannot exceed price.",
+    //             new[] { nameof(SalesPrice) });
+    //     }
+
+    //     if (ProducedDate > DateTime.Now)
+    //     {
+    //         yield return new ValidationResult(
+    //             "End date must be after start date.",
+    //             new[] { nameof(ProducedDate) });
+    //     }
+    // }
 
 }
