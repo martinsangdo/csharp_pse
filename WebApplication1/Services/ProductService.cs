@@ -145,4 +145,19 @@ public class ProductService
         var items = query.ToList();
         return items;
     }
+
+    public int CreateProduct(CreateProductDto dto)
+    {
+        var product = new Product
+        {
+            Name = dto.Name,
+            CategoryId = dto.category_id,
+            Price = dto.Price,
+            Description = dto.description,
+            ImageUrl = dto.image_url,
+        };
+
+        _db.Product.Add(product);
+        return _db.SaveChanges();
+    }
 }

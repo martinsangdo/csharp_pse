@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Product
 {
     [Column("product_id")]
-    public int ProductId { get; set; }  //auto match with product_id
+    public int ProductId { get; set; }  //primary key, auto match with product_id
 
     [Column("category_id")]
     public int CategoryId { get; set; }

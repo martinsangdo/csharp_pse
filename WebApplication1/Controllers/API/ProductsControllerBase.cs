@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
+[ApiController]
 [Route("api/product")]  //
 public class ProductsControllerBase : ControllerBase
 {
@@ -103,6 +104,13 @@ public class ProductsControllerBase : ControllerBase
             Message = "Product received",
             Data = product
         });
+    }
+    //create with basic validation
+    [HttpPost("create_with_basic_validation")]
+    public IActionResult CreateProductWithBasicValidation(CreateProductDto dto)
+    {
+        _productService.CreateProduct(dto);
+        return Ok("Product Created Successfully");
     }
     //========== PUT
     [HttpPut("detail")]
