@@ -1,0 +1,23 @@
+curl --location 'http://127.0.0.1:5020/api/product/create_with_basic_validation' \
+--header 'Content-Type: application/json' \
+--data '{
+    "Name": "Uniqlo t shirt 2026",
+    "price": 76,
+    "description": "unique model in 2026. A Black Shirt Hanging on the Wall",
+    "image_url": "https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg",
+    "category_id": 1,
+    "SalesPrice": 566,
+    "ProducedDate": "2026-10-14"
+}'
+====
+curl --location 'http://127.0.0.1:5020/api/account/create_with_basic_validation' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "test5@gmail.com",
+    "phone": "09074847339",
+    "status": "Active",
+    "address": "Ha Noi",
+    "fullname": "Mikde",
+    "hashed_password": "aaabbbcccdddeeefffaaabbbcccdddeeefffaaabbbcccdddeeefffaaabbbcccdddeeefffaaabbbcccdddeeefff",
+    "created_at": "2026-02-01"
+}'

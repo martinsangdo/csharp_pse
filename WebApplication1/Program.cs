@@ -9,6 +9,7 @@ builder.Services.AddHttpClient<ExternalService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<CommentService>();
+builder.Services.AddScoped<AccountService>();
 
 //connect to SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
