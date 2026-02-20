@@ -1,0 +1,81 @@
+-- CREATE TABLE category (
+--     category_id INT IDENTITY(1,1) PRIMARY KEY,
+--     name VARCHAR(200) NOT NULL,
+--     description VARCHAR(MAX) NULL,
+--     parent_category_id INT NULL
+-- );
+
+-- CREATE TABLE product (
+--     product_id INT IDENTITY(1,1) PRIMARY KEY,
+--     category_id INT NOT NULL,
+--     name VARCHAR(255) NOT NULL,
+--     description VARCHAR(MAX),
+--     price DECIMAL(10,2) NOT NULL DEFAULT 0,
+--     stock INT NOT NULL DEFAULT 0,
+--     image_url VARCHAR(500),
+--     status VARCHAR(20) NOT NULL DEFAULT 'Active'
+-- );
+
+-- CREATE TABLE user_account (
+--     user_id INT IDENTITY(1,1) PRIMARY KEY,
+--     fullname VARCHAR(200) NOT NULL,
+--     email VARCHAR(200) NOT NULL UNIQUE,
+--     hashed_password VARCHAR(255) NOT NULL,
+--     phone VARCHAR(50),
+--     address VARCHAR(MAX),
+--     created_at DATETIME NOT NULL DEFAULT GETDATE(),
+--     status VARCHAR(20) NOT NULL DEFAULT 'Active'
+-- );
+
+-- CREATE TABLE employee (
+--     employee_id INT IDENTITY(1,1) PRIMARY KEY,
+--     fullName VARCHAR(200) NOT NULL,
+--     email VARCHAR(200) NOT NULL UNIQUE,
+--     hashed_password VARCHAR(255) NOT NULL,
+--     role VARCHAR(20) NOT NULL DEFAULT 'Staff',
+--     status VARCHAR(20) NOT NULL DEFAULT 'Active'
+-- );
+
+-- CREATE TABLE voucher (
+--     voucher_id INT IDENTITY(1,1) PRIMARY KEY,
+--     code VARCHAR(100) NOT NULL UNIQUE,
+--     description VARCHAR(MAX),
+--     discount_percent DECIMAL(5,2) NULL,
+--     discount_amount DECIMAL(10,2) NULL,
+--     start_date DATE NOT NULL,
+--     end_date DATE NOT NULL,
+--     quantity INT DEFAULT 0,
+--     status VARCHAR(20) NOT NULL DEFAULT 'Active'
+-- );
+
+-- CREATE TABLE orders (
+--     order_id INT IDENTITY(1,1) PRIMARY KEY,
+--     user_id INT NOT NULL,
+--     employee_id INT NULL,
+--     voucher_id INT NULL,
+--     order_date DATETIME NOT NULL DEFAULT GETDATE(),
+--     total_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
+--     final_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
+--     payment_method VARCHAR(100),
+--     payment_status VARCHAR(20) NOT NULL DEFAULT 'Pending',
+--     shipping_status VARCHAR(20) NOT NULL DEFAULT 'Pending',
+--     shipping_address VARCHAR(MAX)
+-- );
+
+-- CREATE TABLE order_item (
+--     item_id INT IDENTITY(1,1) PRIMARY KEY,
+--     order_id INT NOT NULL,
+--     product_id INT NOT NULL,
+--     quantity INT NOT NULL,
+--     unit_price DECIMAL(10,2) NOT NULL,
+--     total_price DECIMAL(12,2) NOT NULL
+-- );
+
+-- CREATE TABLE RevenueReport (
+--     ReportID INT IDENTITY(1,1) PRIMARY KEY,
+--     ReportDate DATE NOT NULL,
+--     TotalOrders INT DEFAULT 0,
+--     TotalRevenue DECIMAL(15,2) DEFAULT 0,
+--     TotalDiscount DECIMAL(15,2) DEFAULT 0,
+--     NetIncome DECIMAL(15,2) DEFAULT 0
+-- );
