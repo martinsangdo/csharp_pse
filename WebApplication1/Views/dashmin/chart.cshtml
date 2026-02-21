@@ -200,7 +200,7 @@
                     </div>
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Single Bar Chart</h6>
+                            <h6 class="mb-4">Total products by category</h6>
                             <canvas id="bar-chart"></canvas>
                         </div>
                     </div>
@@ -260,7 +260,10 @@
     <script src="~/dashmin/lib/tempusdominus/js/moment.min.js"></script>
     <script src="~/dashmin/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="~/dashmin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <script>
+        window.dynamicLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.singleChartLabels));
+        window.dynamicData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.singleChartData));
+    </script>
     <!-- Template Javascript -->
     <script src="~/dashmin/js/main.js"></script>
 </body>

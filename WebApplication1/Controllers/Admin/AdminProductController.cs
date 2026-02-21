@@ -18,6 +18,9 @@ public class AdminProductController : Controller
     [Route("dashboard")]
     public IActionResult showAdminDashboard()
     {
+        ViewBag.singleChartLabels = new List<string> { "category 1", "category 2", "category 3" };
+        ViewBag.singleChartData = new List<int> { 3, 6, 5};
+
         return View("~/Views/dashmin/chart.cshtml");
     }
 
