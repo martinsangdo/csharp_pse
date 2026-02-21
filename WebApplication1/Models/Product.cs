@@ -1,8 +1,10 @@
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 public class Product
 {
+    [Key]
     [Column("product_id")]
     public int ProductId { get; set; }  //primary key, auto match with product_id
 

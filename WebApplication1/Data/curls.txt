@@ -56,3 +56,24 @@ curl --location 'http://127.0.0.1:5020/api/product/bulk_create' \
     }
 ]'
 ===
+curl --location 'http://127.0.0.1:5020/api/product/bulk_upsert' \
+--header 'Content-Type: application/json' \
+--data '[
+    {
+        "ProductId": 3003,
+        "Name": "Uniqlo t shirt 2027 updated",
+        "price": 400,
+        "description": "updated. A Black Shirt Hanging on the Wall",
+        "category_id": 1,
+        "image_url": "https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg"
+    },
+    {
+        "Name": "Uniqlo t shirt 2029",
+        "price": 200,
+        "description": "unique model in 2026. A Black Shirt Hanging on the Wall",
+        "image_url": "https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg",
+        "category_id": 2,
+        "SalesPrice": 40,
+        "ProducedDate": "2026-01-10"
+    }
+]'

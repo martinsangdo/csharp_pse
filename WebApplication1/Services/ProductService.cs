@@ -179,4 +179,22 @@ public class ProductService
         await _db.BulkInsertAsync(entities);
         return entities.Count;
     }
+
+    public async Task<int> BulkUpsertProducts(List<CreateProductDto> products)
+    {
+        var entities = products.Select(p => new Product
+        {
+            ProductId = p.ProductId,
+            CategoryId = p.category_id,
+            Name = p.Name,
+            Description = p.description,
+            Price = p.Price,
+            SalesPrice = p.SalesPrice,
+            ProducedDate = p.ProducedDate,
+            ImageUrl = p.image_url
+        }).ToList();
+
+        await _db.BulkInsertOrUpdateAsync(entities);
+        return entities.Count;
+    }
 }
