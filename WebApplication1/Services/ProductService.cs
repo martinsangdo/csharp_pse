@@ -194,7 +194,13 @@ public class ProductService
             ImageUrl = p.image_url
         }).ToList();
 
-        await _db.BulkInsertOrUpdateAsync(entities);
+        // await _db.BulkInsertOrUpdateAsync(entities);
+        //upsert by name, not id
+        await _db.BulkInsertOrUpdateAsync(entities, options =>
+        {
+            options.UpdateByProperties = new List<string> { "Name" };
+        });
+
         return entities.Count;
     }
 }
