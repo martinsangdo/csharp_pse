@@ -28,13 +28,14 @@ public class CategoryService
         ORDER BY c.Name;
         */
         var categories = (from c in _db.Category
-                 join p in _db.Product on c.CategoryID equals p.CategoryId into g
-                 select new CategoryWithCountVM
-                 {
-                     CategoryID = c.CategoryID,
-                     Name = c.Name,
-                     TotalProducts = g.Count()
-                 }).ToList();
+                          join p in _db.Product on c.CategoryID equals p.CategoryId into g
+                        //   orderby g.Count() ascending    //descending
+                          select new CategoryWithCountVM
+                          {
+                              CategoryID = c.CategoryID,
+                              Name = c.Name,
+                              TotalProducts = g.Count()
+                          }).ToList();
 
         // int totalProductsInCategoryA = _db.Product
         //     .Count(p => p.CategoryId == categoryId);
