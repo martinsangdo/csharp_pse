@@ -112,6 +112,13 @@ public class ProductsControllerBase : ControllerBase
         _productService.CreateProduct(dto);
         return Ok("Product Created Successfully");
     }
+
+    [HttpPost("bulk_create")]
+    public async Task<IActionResult> BulkCreate([FromBody] List<CreateProductDto> products)
+    {
+        int numberOfProducts = await _productService.CreateBulkProducts(products);
+        return Ok("Inserted successfully with total:" + numberOfProducts);
+    }
     //========== PUT
     [HttpPut("detail")]
     public IActionResult updateDetail(string price)

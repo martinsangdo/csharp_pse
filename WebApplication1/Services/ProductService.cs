@@ -1,5 +1,7 @@
 
 using System.Text.Json;
+using EFCore.BulkExtensions;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Services;
 
 public class ProductService
@@ -159,5 +161,22 @@ public class ProductService
 
         _db.Product.Add(product);
         return _db.SaveChanges();
+    }
+
+    public async Task<int> CreateBulkProducts(List<CreateProductDto> products)
+    {
+        var entities = products.Select(p => new Product
+        {
+            CategoryId = p.category_id,
+            Name = p.Name,
+            Description = p.description,
+            Price = p.Price,
+            SalesPrice = p.SalesPrice,
+            ProducedDate = p.ProducedDate,
+            ImageUrl = p.image_url
+        }).ToList();
+
+        await _db.BulkInsertAsync(entities);
+        return entities.Count;
     }
 }

@@ -21,3 +21,38 @@ curl --location 'http://127.0.0.1:5020/api/account/create_with_basic_validation'
     "hashed_password": "aaabbbcccdddeeefffaaabbbcccdddeeefffaaabbbcccdddeeefffaaabbbcccdddeeefffaaabbbcccdddeeefff",
     "created_at": "2026-02-01"
 }'
+=====
+dotnet list package
+
+dotnet add package Microsoft.EntityFrameworkCore --version 9.0.9
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 9.0.9
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 9.0.9
+dotnet add package EFCore.BulkExtensions --version 9.0.9
+
+dotnet clean
+dotnet restore
+dotnet build
+===
+curl --location 'http://127.0.0.1:5020/api/product/bulk_create' \
+--header 'Content-Type: application/json' \
+--data '[
+    {
+        "Name": "Uniqlo t shirt 2027",
+        "price": 76,
+        "description": "unique model in 2026. A Black Shirt Hanging on the Wall",
+        "image_url": "https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg",
+        "category_id": 1,
+        "SalesPrice": 566,
+        "ProducedDate": "2026-10-14"
+    },
+    {
+        "Name": "Uniqlo t shirt 2028",
+        "price": 76,
+        "description": "unique model in 2026. A Black Shirt Hanging on the Wall",
+        "image_url": "https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg",
+        "category_id": 1,
+        "SalesPrice": 488,
+        "ProducedDate": "2026-10-14"
+    }
+]'
+===

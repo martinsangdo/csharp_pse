@@ -13,4 +13,11 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Account> user_account { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        //because EF extension maps to the table "Products" by default
+        //run: dotnet clean & dotnet build
+        modelBuilder.Entity<Product>().ToTable("product");
+    }
+
 }
