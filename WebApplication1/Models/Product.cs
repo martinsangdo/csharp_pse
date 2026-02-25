@@ -20,7 +20,7 @@ public class Product
     [Column("price")]
     public decimal Price { get; set; }
 
-    public decimal SalesPrice { get; set; }
+    public decimal? SalesPrice { get; set; }
     public DateTime? ProducedDate { get; set; }
 
     [Column("stock")]

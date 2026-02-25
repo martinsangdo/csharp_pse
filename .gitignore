@@ -125,3 +125,4 @@ package-lock.json
 *.vsp
 *.vspscc
 *.vssscc
+*.sln
