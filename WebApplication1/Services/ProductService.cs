@@ -203,4 +203,27 @@ public class ProductService
 
         return entities.Count;
     }
+
+    //deduct all products with a number using transaction
+    public string deductStock(int deductNum)
+    {
+        using (var transaction = _db.Database.BeginTransaction()){
+            try {
+                var products = _db.Product.Where(p => p.Stock > 0).ToList();
+                foreach (var product in products)
+                {
+                    product.Stock -= deductNum;
+                    if (product.Stock < 0){
+                        throw new Exception($"Stock cannot be negative for product {product.Name}");
+                    }
+                }
+                _db.SaveChanges();
+                transaction.Commit();
+                return "Stock updated successfully";
+            } catch (Exception ex){
+                transaction.Rollback();
+                return "Transaction failed: " + ex.Message;
+            }
+        }
+    }
 }

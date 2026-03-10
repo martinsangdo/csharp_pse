@@ -134,6 +134,13 @@ public class ProductsControllerBase : ControllerBase
         detail["price"] = price;
         return Ok(detail);
     }
+
+    [HttpPut("deduct_stock")]
+    public IActionResult deductStock(int deductNum)
+    {
+        string result = _productService.deductStock(deductNum);
+        return Ok(result);
+    }
     //========== 
     //create new product comment
     [HttpPost]
