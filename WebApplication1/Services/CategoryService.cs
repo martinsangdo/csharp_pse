@@ -29,7 +29,7 @@ public class CategoryService
         */
         var categories = (from c in _db.Category
                           join p in _db.Product on c.CategoryID equals p.CategoryId into g
-                          orderby g.Sum(p => p.Stock) ascending    //descending
+                          orderby g.Sum(p => p.Stock) descending    //descending
                           select new CategoryWithCountVM
                           {
                               CategoryID = c.CategoryID,

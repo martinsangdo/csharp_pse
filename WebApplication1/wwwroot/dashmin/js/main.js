@@ -88,21 +88,21 @@
     });
 
 
-    // Salse & Revenue Chart
+    // Sales & Revenue Chart
     var ctx2 = $("#salse-revenue").get(0).getContext("2d");
     var myChart2 = new Chart(ctx2, {
         type: "line",
         data: {
-            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+            labels: window.dynamicLabels || ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
             datasets: [{
-                    label: "Salse",
+                    label: "Sales",
                     data: [15, 30, 55, 45, 70, 65, 85],
                     backgroundColor: "rgba(0, 156, 255, .5)",
                     fill: true
                 },
                 {
                     label: "Revenue",
-                    data: [99, 135, 170, 130, 190, 180, 270],
+                    data: window.dynamicData || [99, 135, 170, 130, 190, 180, 270],
                     backgroundColor: "rgba(0, 156, 255, .3)",
                     fill: true
                 }
@@ -120,12 +120,12 @@
     var myChart3 = new Chart(ctx3, {
         type: "line",
         data: {
-            labels: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
+            labels: window.dynamicLabels || [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
             datasets: [{
-                label: "Salse",
+                label: "Sales",
                 fill: false,
                 backgroundColor: "rgba(0, 156, 255, .3)",
-                data: [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15]
+                data: window.dynamicData || [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15]
             }]
         },
         options: {
