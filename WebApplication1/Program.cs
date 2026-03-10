@@ -30,12 +30,14 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
+app.UseStaticFiles();   //v8
+
+// app.MapStaticAssets();   //v9
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+    // .WithStaticAssets(); //v9
 
 
 app.Run();
