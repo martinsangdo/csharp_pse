@@ -21,20 +21,20 @@ public class CategoryService
         //                       .ToList();
 
         /*
-        SELECT c.Id, c.Name, COUNT(p.Id) AS TotalProducts
-        FROM Categories c
-        LEFT JOIN Products p ON p.CategoryId = c.Id
-        GROUP BY c.Id, c.Name
-        ORDER BY c.Name;
+        SELECT c.category_id, c.Name, SUM(p.Stock) AS TotalProducts
+        FROM category c
+        LEFT JOIN product p ON p.category_id = c.category_id
+        GROUP BY c.category_id, c.Name
+        ORDER BY TotalProducts;
         */
         var categories = (from c in _db.Category
                           join p in _db.Product on c.CategoryID equals p.CategoryId into g
-                        //   orderby g.Count() ascending    //descending
+                          orderby g.Sum(p => p.Stock) ascending    //descending
                           select new CategoryWithCountVM
                           {
                               CategoryID = c.CategoryID,
                               Name = c.Name,
-                              TotalProducts = g.Count()
+                              TotalProducts = g.Sum(p => p.Stock)
                           }).ToList();
 
         // int totalProductsInCategoryA = _db.Product
