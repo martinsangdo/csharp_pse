@@ -40,7 +40,7 @@ public class AccountService
             hashed_password = dto.hashed_password,
             phone = dto.phone,
             address = dto.address,
-            status = dto.status,
+            status = "Active",
             created_at = DateTime.UtcNow
         };
 

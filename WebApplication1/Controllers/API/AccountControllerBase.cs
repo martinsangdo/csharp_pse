@@ -50,7 +50,7 @@ public class AccountControllerBase : ControllerBase
     }
     //register new account, return JWT token if success
     [HttpPost("register")]
-    public IActionResult CreateNewAccount(CreateAccountDto dto)
+    public IActionResult CreateNewAccount(CreateAccountDto dto) //use [FromForm] if submit by Form in HTML
     {
         int resultCode = _accountService.CreateNonDuplicatedAccount(dto);
         if (resultCode == 0)
