@@ -24,4 +24,27 @@ public class AccountService
         _db.user_account.Add(account);
         return _db.SaveChanges();
     }
+
+    public int CreateNonDuplicatedAccount(CreateAccountDto dto)
+    {
+        //check if email is duplicated or not
+        bool emailExisted = _db.user_account.Any(a => a.email == dto.email);
+        if (emailExisted)
+            return 0;
+
+        //
+        var account = new Account
+        {
+            fullname = dto.fullname,
+            email = dto.email,
+            hashed_password = dto.hashed_password,
+            phone = dto.phone,
+            address = dto.address,
+            status = dto.status,
+            created_at = DateTime.UtcNow
+        };
+
+        _db.user_account.Add(account);
+        return _db.SaveChanges();
+    }
 }

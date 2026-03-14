@@ -48,4 +48,22 @@ public class AccountControllerBase : ControllerBase
         var phone = User.FindFirst("phone")?.Value;
         return Ok(new { userId, email, phone});
     }
+    //register new account, return JWT token if success
+    [HttpPost("register")]
+    public IActionResult CreateNewAccount(CreateAccountDto dto)
+    {
+        int resultCode = _accountService.CreateNonDuplicatedAccount(dto);
+        if (resultCode == 0)
+        {
+            //email duplicated
+            return Conflict(new { message = "Email already exists." });
+        }
+        //create token
+        var token = _jwtService.GenerateToken(
+            userId: resultCode.ToString(), //test ID
+            email:  dto.email,
+            phone: dto.phone
+        );
+        return Ok(new { token });
+    }
 }
