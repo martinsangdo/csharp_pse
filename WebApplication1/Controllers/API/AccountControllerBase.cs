@@ -31,7 +31,8 @@ public class AccountControllerBase : ControllerBase
             return Unauthorized(new { message = "Invalid credentials" });
         var token = _jwtService.GenerateToken(
             userId: "user-001", //test ID
-            email:  email
+            email:  email,
+            phone: "0905432123"
         );
         return Ok(new { token });
     }
@@ -41,9 +42,10 @@ public class AccountControllerBase : ControllerBase
     [HttpGet("profile")]
     public IActionResult Profile()
     {
+        //User is a built-in property inherited from ControllerBase after going through JWT middleware
         var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
         var email  = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
-
-        return Ok(new { userId, email });
+        var phone = User.FindFirst("phone")?.Value;
+        return Ok(new { userId, email, phone});
     }
 }

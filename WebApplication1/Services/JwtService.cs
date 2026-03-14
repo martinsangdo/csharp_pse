@@ -12,7 +12,7 @@ public class JwtService
         _config = config;
     }
     //create new token 
-    public string GenerateToken(string userId, string email)
+    public string GenerateToken(string userId, string email, string phone)
     {
         var settings   = _config.GetSection("JwtSettings");
         var key        = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings["SecretKey"]!));
@@ -22,6 +22,7 @@ public class JwtService
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId), //subject ID
+            new Claim("phone", phone),
             new Claim(JwtRegisteredClaimNames.Email, email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // unique token ID for this token
         };
