@@ -28,6 +28,41 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey         = new SymmetricSecurityKey(
                                            Encoding.UTF8.GetBytes(jwt["SecretKey"]!))
         };
+        //add event to see the detail error
+        options.Events = new JwtBearerEvents
+        {
+            // Fires when token validation fails
+            OnAuthenticationFailed = context =>
+            {
+                string message = context.Exception switch
+                {
+                    SecurityTokenExpiredException    => "Token has expired.",
+                    SecurityTokenInvalidSignatureException => "Token signature is invalid.",
+                    SecurityTokenInvalidIssuerException    => "Token issuer is invalid.",
+                    SecurityTokenInvalidAudienceException  => "Token audience is invalid.",
+                    SecurityTokenNotYetValidException      => "Token is not valid yet.",
+                    _                                      => "Token is invalid."
+                };
+
+                context.Response.StatusCode  = 401;
+                context.Response.ContentType = "application/json";
+                context.Response.WriteAsync($"{{\"error\": \"{message}\"}}");
+                return Task.CompletedTask;
+            },
+
+            // Fires when no token is provided
+            OnChallenge = context =>
+            {
+                if (!context.Response.HasStarted)
+                {
+                    context.HandleResponse(); // suppress default 401
+                    context.Response.StatusCode  = 401;
+                    context.Response.ContentType = "application/json";
+                    context.Response.WriteAsync("{\"error\": \"No token provided. Please include Authorization: Bearer <token>\"}");
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 builder.Services.AddAuthorization();
 
