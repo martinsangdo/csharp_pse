@@ -37,7 +37,6 @@ public class AccountControllerBase : ControllerBase
         return Ok(new { token });
     }
 
-    // GET api/auth/profile  (protected)
     [Authorize]
     [HttpGet("profile")]
     public IActionResult Profile()
@@ -48,6 +47,7 @@ public class AccountControllerBase : ControllerBase
         var phone = User.FindFirst("phone")?.Value;
         return Ok(new { userId, email, phone});
     }
+
     //register new account, return JWT token if success
     [HttpPost("register")]
     public IActionResult CreateNewAccount(CreateAccountDto dto) //use [FromForm] if submit by Form in HTML
@@ -89,5 +89,15 @@ public class AccountControllerBase : ControllerBase
         });
         // do NOT return the token in the body — it's already in the cookie
         return Ok(new { success = true, message = "Logged in successfully." });
+    }
+
+    [Authorize]
+    [HttpGet("profile_with_cookie")]
+    public IActionResult ProfileWithCookie()
+    {
+        //
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        var email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
+        return Ok(new { userId, email});
     }
 }
