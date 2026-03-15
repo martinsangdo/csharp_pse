@@ -100,4 +100,11 @@ public class AccountControllerBase : ControllerBase
         var email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
         return Ok(new { userId, email});
     }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("token");
+        return Ok(new { success = true, message = "Logged out successfully." });
+    }
 }

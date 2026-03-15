@@ -18,7 +18,8 @@ public class AccountController : Controller
     {
         var email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
         if (string.IsNullOrEmpty(email))
-            return Unauthorized();
+            return View("~/Views/ogani/login.cshtml");
+
         Account savedAccount = _accountService.GetInfo(email);
         if (savedAccount != null)
         {

@@ -137,7 +137,7 @@
             const data = await response.json();
             if (response.ok) {
                 console.log('Logged in!');
-                //todo: redirect to another page
+                window.location.href = "/account/profile";
             } else {
                 console.error(data.message);
             }

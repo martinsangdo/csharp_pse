@@ -157,7 +157,24 @@
 
     .btn:hover { background: #a8401a; transform: translateY(-1px); }
     .btn:active { transform: translateY(0); }
+
+    .btn-gray {background: #8a7f74;}
   </style>
+  <script>
+      async function logout() {
+            const response = await fetch('/api/account/logout', {
+                method:      'POST',
+                credentials: 'include'   //required to send/receive cookies
+            });
+            const data = await response.json();
+            if (response.ok) {
+                console.log('Logged out!');
+                window.location.href = "/account/login";
+            } else {
+                console.error(data.message);
+            }
+        }
+  </script>
 </head>
 <body>
 
@@ -193,6 +210,8 @@
     </div>
 
     <button class="btn">Edit Profile</button>
+
+    <button type="button" class="btn btn-gray" onclick="logout();">Logout</button>
   </div>
 </div>
 
