@@ -47,6 +47,7 @@ public class JwtService
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId), //subject ID
             new Claim("phone", phone),
+            // new Claim("role", role),     //excercise
             new Claim(JwtRegisteredClaimNames.Email, email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // unique token ID for this token
         };

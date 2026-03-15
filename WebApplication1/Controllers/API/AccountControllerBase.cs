@@ -77,6 +77,7 @@ public class AccountControllerBase : ControllerBase
         var token = _jwtService.GenerateToken(
             userId: "3", //test ID
             email:  email,
+            // role: "user",
             phone: "0905432123"
         );
         // Store token in HttpOnly cookie

@@ -29,4 +29,18 @@ public class AccountController : Controller
         return View("~/Views/ogani/profile.cshtml");
 
     }
+
+    [Route("financial")]
+    public IActionResult financialView()
+    {
+        var role = User.FindFirst("role")?.Value;
+        if (string.IsNullOrEmpty(role))
+            return View("~/Views/ogani/login.cshtml");
+        if (role == "user")
+        {
+            return View("~/Views/ogani/login.cshtml");
+        }
+        return View("~/Views/ogani/financial.cshtml");
+
+    }
 }
