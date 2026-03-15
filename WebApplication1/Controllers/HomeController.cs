@@ -53,4 +53,10 @@ public class HomeController : Controller
     {
         return View("~/Views/ogani/register.cshtml");
     }
+
+    [Route("account/login")]
+    public IActionResult loginView()
+    {
+        return View("~/Views/ogani/login.cshtml");
+    }
 }
