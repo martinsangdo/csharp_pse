@@ -1,0 +1,200 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f0ea;
+      --card: #ffffff;
+      --ink: #1a1612;
+      --muted: #8a7f74;
+      --accent: #c8501a;
+      --border: #e8e0d5;
+      --shadow: 0 8px 40px rgba(0,0,0,0.08);
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 480px;
+      overflow: hidden;
+      animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* Header strip */
+    .header {
+      background: var(--ink);
+      padding: 2.5rem 2rem 4rem;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c8501a 0%, #e8824d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #fff;
+      margin-top: 1.2rem;
+      border: 3px solid rgba(255,255,255,0.12);
+    }
+
+    .name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      color: #fff;
+      margin-top: 0.75rem;
+      line-height: 1.2;
+    }
+
+    /* Info rows */
+    .body {
+      padding: 2rem;
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      animation: fade-in 0.5s ease both;
+    }
+
+    .row:last-child { border-bottom: none; }
+
+    .row:nth-child(1) { animation-delay: 0.15s; }
+    .row:nth-child(2) { animation-delay: 0.25s; }
+    .row:nth-child(3) { animation-delay: 0.35s; }
+
+    .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+
+    .info { flex: 1; }
+
+    .info-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .info-value {
+      font-size: 0.95rem;
+      color: var(--ink);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* Edit button */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn:hover { background: #a8401a; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <span class="label">User Profile</span>
+    <h1 class="name">@ViewBag.fullname</h1>
+  </div>
+
+  <div class="body">
+    <div class="row">
+      <div class="icon">✉️</div>
+      <div class="info">
+        <div class="info-label">Email</div>
+        <div class="info-value">@ViewBag.email</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="icon">📱</div>
+      <div class="info">
+        <div class="info-label">Phone</div>
+        <div class="info-value"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="icon">📍</div>
+      <div class="info">
+        <div class="info-label">Address</div>
+        <div class="info-value"></div>
+      </div>
+    </div>
+
+    <button class="btn">Edit Profile</button>
+  </div>
+</div>
+
+</body>
+</html>

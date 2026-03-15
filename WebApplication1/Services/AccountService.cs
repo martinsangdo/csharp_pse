@@ -1,4 +1,6 @@
 
+using Microsoft.EntityFrameworkCore;
+
 public class AccountService
 {
     private readonly ApplicationDbContext _db;
@@ -46,5 +48,10 @@ public class AccountService
 
         _db.user_account.Add(account);
         return _db.SaveChanges();
+    }
+
+    public Account? GetInfo(string email)
+    {
+        return _db.user_account.FirstOrDefault(a => a.email == email);
     }
 }

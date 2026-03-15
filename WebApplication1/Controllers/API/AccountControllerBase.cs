@@ -27,7 +27,7 @@ public class AccountControllerBase : ControllerBase
     public IActionResult Login([FromForm] string email, [FromForm] string hashedPassword)
     {
         //give sample email and password
-        if (email != "user@example.com" || hashedPassword != "password123")
+        if (email != "minhc@example.com" || hashedPassword != "hashed_pw_789ghi")
             return Unauthorized(new { message = "Invalid credentials" });
         var token = _jwtService.GenerateToken(
             userId: "user-001", //test ID
@@ -72,10 +72,10 @@ public class AccountControllerBase : ControllerBase
     public IActionResult LoginWithCookie([FromForm] string email, [FromForm] string hashedPassword)
     {
         //give sample email and password
-        if (email != "user@example.com" || hashedPassword != "password123")
+        if (email != "minhc@example.com" || hashedPassword != "hashed_pw_789ghi")   //todo: connect with database for checking this
             return Unauthorized(new { message = "Invalid credentials" });
         var token = _jwtService.GenerateToken(
-            userId: "user-001", //test ID
+            userId: "3", //test ID
             email:  email,
             phone: "0905432123"
         );
