@@ -31,6 +31,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //add event to see the detail error
         options.Events = new JwtBearerEvents
         {
+            //read token from cookie instead of header Authorization
+            OnMessageReceived = context =>
+            {
+                var token = context.Request.Cookies["token"];
+                if (!string.IsNullOrEmpty(token))
+                    context.Token = token;
+                return Task.CompletedTask;
+            },
             // Fires when token validation fails
             OnAuthenticationFailed = context =>
             {

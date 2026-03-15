@@ -66,4 +66,28 @@ public class AccountControllerBase : ControllerBase
         );
         return Ok(new { token });
     }
+
+    //simulate login function and store data in cookie
+    [HttpPost("login_with_cookie")]
+    public IActionResult LoginWithCookie([FromForm] string email, [FromForm] string hashedPassword)
+    {
+        //give sample email and password
+        if (email != "user@example.com" || hashedPassword != "password123")
+            return Unauthorized(new { message = "Invalid credentials" });
+        var token = _jwtService.GenerateToken(
+            userId: "user-001", //test ID
+            email:  email,
+            phone: "0905432123"
+        );
+        // Store token in HttpOnly cookie
+        Response.Cookies.Append("token", token, new CookieOptions
+        {
+            HttpOnly = true,    // JS cannot read this cookie
+            Secure   = false,   // HTTPS only (set false for localhost dev)
+            SameSite = SameSiteMode.Strict, //only same domain can access
+            Expires  = DateTimeOffset.UtcNow.AddMinutes(60) //invalid after 60 mins
+        });
+        // do NOT return the token in the body — it's already in the cookie
+        return Ok(new { success = true, message = "Logged in successfully." });
+    }
 }
