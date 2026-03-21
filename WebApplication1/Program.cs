@@ -91,7 +91,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseStaticFiles();   //v8
+app.UseStaticFiles();   //v8, public folder wwwroot/
 
 // app.MapStaticAssets();   //v9
 

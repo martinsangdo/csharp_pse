@@ -127,3 +127,4 @@ package-lock.json
 *.vssscc
 *.sln
 *.csproj
+uploads
