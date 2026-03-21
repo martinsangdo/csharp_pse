@@ -20,4 +20,6 @@ public class Account
     public DateTime? created_at { get; set; }
 
     public string status { get; set; }
+
+    public string? avatar { get; set; }
 }

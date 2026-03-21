@@ -185,6 +185,17 @@
   </div>
 
   <div class="body">
+    <div>
+      <div>
+        <input type="file" id="fileInput" accept="image/*"/>
+      </div>
+      <div style="margin-top:10px;">
+        <img id="previewImg" src="@(ViewBag.avatar ?? "")" alt="Preview" style="max-width:100px; border-radius:8px;" />
+      </div>
+      <div>
+        <button type="button" class="btn btn-gray" onclick="uploadImage();">Upload Avatar</button>
+      </div>
+    </div>
     <div class="row">
       <div class="icon">✉️</div>
       <div class="info">
@@ -193,7 +204,7 @@
       </div>
     </div>
 
-    <div class="row">
+    @* <div class="row">
       <div class="icon">📱</div>
       <div class="info">
         <div class="info-label">Phone</div>
@@ -207,13 +218,34 @@
         <div class="info-label">Address</div>
         <div class="info-value"></div>
       </div>
-    </div>
+    </div> *@
 
     <button class="btn">Edit Profile</button>
 
     <button type="button" class="btn btn-gray" onclick="logout();">Logout</button>
   </div>
 </div>
-
+<script>
+// Upload to backend API
+async function uploadImage() {
+    const file = document.getElementById("fileInput").files[0]; //get selected file
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+        const res = await fetch("/api/account/upload_avatar", {
+            method: "POST",
+            body: formData
+        });
+        const data = await res.json();
+        if (res.ok) {
+            document.getElementById("previewImg").src = data.url;
+        } else {
+            alert(data.message || "Upload failed");
+        }
+    } catch (err) {
+        alert("Error uploading file");
+    }
+}
+</script>
 </body>
 </html>

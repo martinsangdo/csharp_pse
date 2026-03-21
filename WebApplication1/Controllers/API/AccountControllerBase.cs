@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Amazon.S3;
+using Amazon.S3.Model;
 
 [ApiController]
 [Route("api/account")]  //
@@ -7,6 +9,7 @@ public class AccountControllerBase : ControllerBase
 {
     private readonly AccountService _accountService;
     private readonly JwtService _jwtService;
+    private IAmazonS3 _s3Client;
 
     public AccountControllerBase(AccountService accountService, JwtService jwtService)
     {
@@ -107,5 +110,54 @@ public class AccountControllerBase : ControllerBase
     {
         Response.Cookies.Delete("token");
         return Ok(new { success = true, message = "Logged out successfully." });
+    }
+
+    void initS3Client(string? accountId)
+    {
+        var config = new AmazonS3Config
+        {
+            ServiceURL = $"https://{accountId}.r2.cloudflarestorage.com",
+            ForcePathStyle = true //upload through R2, not native AWS S3
+        };
+        _s3Client = new AmazonS3Client(
+            Environment.GetEnvironmentVariable("R2__AccessKey"),
+            Environment.GetEnvironmentVariable("R2__SecretKey"),
+            config
+        );
+    }
+    //upload file to R2
+    [HttpPost("upload_avatar")]
+    public async Task<IActionResult> UploadAvater2R2(IFormFile file) {
+        if (file == null || file.Length == 0)
+            return BadRequest("No file uploaded");
+        string? bucketName = Environment.GetEnvironmentVariable("R2__Bucket");
+        string? accountId = Environment.GetEnvironmentVariable("R2__AccountId");
+        initS3Client(accountId);
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+        var key = $"avatar/{userId}.png";
+
+        using (var stream = file.OpenReadStream()) {
+            var request = new PutObjectRequest
+            {
+                BucketName = bucketName,
+                Key = key,
+                InputStream = stream,
+                ContentType = file.ContentType,
+                DisablePayloadSigning = true,
+                UseChunkEncoding = false
+            };
+            await _s3Client.PutObjectAsync(request);
+        }
+        string? publicUrl = Environment.GetEnvironmentVariable("R2__PublicUrl");
+
+        var fileUrl = $"{publicUrl}{key}";
+        //save file url to database
+        _accountService.saveAvatar(int.Parse(userId), fileUrl);
+        //
+        return Ok(new {
+            message = "Uploaded to R2",
+            url = fileUrl   //file path in R2 bucket
+        });
     }
 }

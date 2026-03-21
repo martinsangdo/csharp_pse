@@ -20,11 +20,12 @@ public class AccountController : Controller
         if (string.IsNullOrEmpty(email))
             return View("~/Views/ogani/login.cshtml");
 
-        Account savedAccount = _accountService.GetInfo(email);
+        Account? savedAccount = _accountService.GetInfo(email);
         if (savedAccount != null)
         {
             ViewBag.fullname = savedAccount.fullname;
             ViewBag.email = savedAccount.email;
+            ViewBag.avatar = savedAccount.avatar;
         }
         return View("~/Views/ogani/profile.cshtml");
 

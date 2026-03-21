@@ -54,4 +54,14 @@ public class AccountService
     {
         return _db.user_account.FirstOrDefault(a => a.email == email);
     }
+
+    public void saveAvatar(int _userId, string fileUrl)
+    {
+        var user = _db.user_account.FirstOrDefault(u => u.UserId == _userId);
+        if (user != null)
+        {
+            user.avatar = fileUrl;
+            _db.SaveChanges();
+        }
+    }
 }
