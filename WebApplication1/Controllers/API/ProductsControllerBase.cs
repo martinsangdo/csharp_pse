@@ -5,7 +5,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Amazon.S3;
 using Amazon.S3.Model;
-
+using System.Net.Http;
 
 [ApiController]
 [Route("api/product")]  //
@@ -301,6 +301,40 @@ public class ProductsControllerBase : ControllerBase
             await _s3Client.PutObjectAsync(request);
         }
         var fileUrl = $"https://{accountId}.r2.cloudflarestorage.com/{bucketName}/{file.FileName}";
+        return Ok(new {
+            message = "Uploaded to R2",
+            url = fileUrl   //file path in R2 bucket
+        });
+    }
+    //download and upload
+    [HttpPost("download_n_upload")]
+    public async Task<IActionResult> UploadFromUrl([FromForm] string imageUrl) {
+        using var http = new HttpClient();
+        //Download image
+        var response = await http.GetAsync(imageUrl);
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("Failed to download image");
+        var stream = await response.Content.ReadAsStreamAsync();
+        // Generate file name
+        var ext = ".jpg"; // or detect from content-type
+        var fileName = $"images/{Guid.NewGuid()}{ext}";
+
+        string? accountId = Environment.GetEnvironmentVariable("R2__AccountId");
+        initS3Client(accountId);
+        //Upload to R2
+        string? bucketName = Environment.GetEnvironmentVariable("R2__Bucket");
+        var request = new PutObjectRequest
+        {
+            BucketName = bucketName,
+            Key = fileName,
+            InputStream = stream,
+            ContentType = response.Content.Headers.ContentType?.ToString(),
+            DisablePayloadSigning = true,
+            UseChunkEncoding = false
+        };
+        await _s3Client.PutObjectAsync(request);
+        string? publicUrl = Environment.GetEnvironmentVariable("R2__PublicUrl");
+        var fileUrl = $"{publicUrl}{fileName}";
         return Ok(new {
             message = "Uploaded to R2",
             url = fileUrl   //file path in R2 bucket
