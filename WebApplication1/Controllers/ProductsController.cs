@@ -211,4 +211,10 @@ public class ProductsController : Controller
         
         return View("~/Views/ogani/search_results.cshtml");
     }
+
+    [Route("products/upload_image")]
+    public IActionResult uploadImageView()
+    {
+        return View("~/Views/ogani/upload.cshtml");
+    }
 }
