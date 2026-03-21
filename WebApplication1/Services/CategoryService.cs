@@ -27,14 +27,29 @@ public class CategoryService
         GROUP BY c.category_id, c.Name
         ORDER BY TotalProducts;
         */
+        
+        //get all categories
+        // var categories = (from c in _db.Category
+        //                   join p in _db.Product on c.CategoryID equals p.CategoryId into g
+        //                   orderby g.Sum(p => p.Stock) descending    //descending
+        //                   select new CategoryWithCountVM
+        //                   {
+        //                       CategoryID = c.CategoryID,
+        //                       Name = c.Name,
+        //                       TotalProducts = g.Sum(p => p.Stock)
+        //                   }).ToList();
+
+        //get data with total products > 0
         var categories = (from c in _db.Category
                           join p in _db.Product on c.CategoryID equals p.CategoryId into g
-                          orderby g.Sum(p => p.Stock) descending    //descending
+                          let totalStock = g.Sum(p => (int?)p.Stock) ?? 0
+                          where totalStock > 0
+                          orderby totalStock descending
                           select new CategoryWithCountVM
                           {
                               CategoryID = c.CategoryID,
                               Name = c.Name,
-                              TotalProducts = g.Sum(p => p.Stock)
+                              TotalProducts = totalStock
                           }).ToList();
 
         // int totalProductsInCategoryA = _db.Product
