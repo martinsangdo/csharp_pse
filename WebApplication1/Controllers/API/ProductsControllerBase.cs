@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Amazon.S3;
+using Amazon.S3.Model;
+
 
 [ApiController]
 [Route("api/product")]  //
@@ -10,6 +13,7 @@ public class ProductsControllerBase : ControllerBase
 {
     private readonly ProductService _productService;
     private readonly CommentService _commentService;
+    private IAmazonS3 _s3Client;
 
     public ProductsControllerBase(ProductService productService, CommentService commentService)
     {
@@ -262,6 +266,44 @@ public class ProductsControllerBase : ControllerBase
             url = fileUrl    //public url
         });
     }
-
-
+    //==== upload to Cloudflare
+    void initS3Client(string? accountId)
+    {
+        var config = new AmazonS3Config
+        {
+            ServiceURL = $"https://{accountId}.r2.cloudflarestorage.com",
+            ForcePathStyle = true //upload through R2, not native AWS S3
+        };
+        _s3Client = new AmazonS3Client(
+            Environment.GetEnvironmentVariable("R2__AccessKey"),
+            Environment.GetEnvironmentVariable("R2__SecretKey"),
+            config
+        );
+    }
+    //upload file to R2
+    [HttpPost("upload_r2")]
+    public async Task<IActionResult> UploadToR2(IFormFile file) {
+        if (file == null || file.Length == 0)
+            return BadRequest("No file uploaded");
+        string? bucketName = Environment.GetEnvironmentVariable("R2__Bucket");
+        string? accountId = Environment.GetEnvironmentVariable("R2__AccountId");
+        initS3Client(accountId);
+        using (var stream = file.OpenReadStream()) {
+            var request = new PutObjectRequest
+            {
+                BucketName = bucketName,
+                Key = file.FileName,
+                InputStream = stream,
+                ContentType = file.ContentType,
+                DisablePayloadSigning = true,
+                UseChunkEncoding = false
+            };
+            await _s3Client.PutObjectAsync(request);
+        }
+        var fileUrl = $"https://{accountId}.r2.cloudflarestorage.com/{bucketName}/{file.FileName}";
+        return Ok(new {
+            message = "Uploaded to R2",
+            url = fileUrl   //file path in R2 bucket
+        });
+    }
 }
