@@ -176,6 +176,8 @@ public class ProductsControllerBase : ControllerBase
     }
     //======
     private readonly string[] allowedImgExtensions = { ".jpg", ".jpeg", ".png" };
+    private readonly string[] allowedPdfExtensions = { ".pdf" };
+
     private readonly string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
 
     string validateImageFile(IFormFile? file)
@@ -185,7 +187,7 @@ public class ProductsControllerBase : ControllerBase
         // Validate extension
         var ext = Path.GetExtension(file.FileName).ToLower();
         if (!allowedImgExtensions.Contains(ext))
-            return "Only image files are allowed.";
+            return "Only image file is allowed.";
         // Validate content type (extra protection)
         if (!file.ContentType.StartsWith("image/"))
             return "Invalid file type.";
@@ -216,5 +218,50 @@ public class ProductsControllerBase : ControllerBase
             url = fileUrl    //public url
         });
     }
+
+    string validatePdfFile(IFormFile? file)
+    {
+        if (file == null || file.Length == 0)
+            return "No file uploaded.";
+        // Validate extension
+        var ext = Path.GetExtension(file.FileName).ToLower();
+        if (!allowedPdfExtensions.Contains(ext))
+            return "Only PDF file is allowed.";
+        // Validate content type (extra protection)
+        if (!file.ContentType.StartsWith("application/pdf"))
+            return "Invalid file type.";
+        if (file.Length > 5 * 1024 * 1024)  //maximum 5MB
+            return "File too large.";
+        //add more validation, if any
+        return "";  //file is a valid pdf file
+    }
+
+    [HttpPost]
+    [Route("upload_pdf")]
+    public async Task<IActionResult> UploadPdf()
+    {
+        var file = Request.Form.Files.FirstOrDefault();
+        string errorValidation = validatePdfFile(file);
+        if (errorValidation != "")
+            return BadRequest(errorValidation);
+        var folderPath = Path.Combine(
+            Directory.GetCurrentDirectory(), "wwwroot", "uploads", "pdf"
+        );
+        if (!Directory.Exists(folderPath))
+            Directory.CreateDirectory(folderPath);
+        var filePath = Path.Combine(folderPath, file.FileName);
+        // Save file to server, at defined folder
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+        var fileUrl = $"{Request.Scheme}://{Request.Host}/uploads/pdf/{file.FileName}";
+        return Ok(new
+        {
+            message = "Upload successful",
+            url = fileUrl    //public url
+        });
+    }
+
 
 }
