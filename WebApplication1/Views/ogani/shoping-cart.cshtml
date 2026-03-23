@@ -484,6 +484,16 @@ Layout = null;
                 totalElement.textContent = formattedTotal;
             }
         }
+
+        function removeFromCart(id) {
+            let cart = JSON.parse(localStorage.getItem("user_order_items")) || [];
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem("user_order_items", JSON.stringify(cart));
+            
+            renderCartTable(); // This will automatically trigger updateCartTotals()
+            updateCartBadge();
+        }
+
         // RUN THIS ON PAGE LOAD
         window.addEventListener('DOMContentLoaded', () => {
             updateCartBadge();
