@@ -217,4 +217,10 @@ public class ProductsController : Controller
     {
         return View("~/Views/ogani/upload.cshtml");
     }
+
+    [Route("products/shop/cart")]
+    public IActionResult showShopCartPage()
+    {
+        return View("~/Views/ogani/shoping-cart.cshtml");
+    }
 }
