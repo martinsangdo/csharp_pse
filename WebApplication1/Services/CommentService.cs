@@ -30,4 +30,15 @@ public class CommentService
         var items = query.ToList();
         return items;
     }
+    //update content
+    public void saveText(int _commentId, string fileContent)
+    {
+        var comment = _db.Comment.FirstOrDefault(c => c.CommentId == _commentId);
+        // var comment = new Comment
+        // {
+        //     Content = fileContent
+        // };
+        comment.Content = fileContent;
+        _db.Comment.Update(comment);
+    }
 }

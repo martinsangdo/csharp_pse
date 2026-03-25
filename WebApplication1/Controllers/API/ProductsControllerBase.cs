@@ -179,7 +179,7 @@ public class ProductsControllerBase : ControllerBase
         return Ok(products);
     }
     //======
-    private readonly string[] allowedImgExtensions = { ".jpg", ".jpeg", ".png" };
+    private readonly string[] allowedImgExtensions = { ".jpg", ".jpeg", ".png", ".txt" };
     private readonly string[] allowedPdfExtensions = { ".pdf" };
 
     private readonly string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
@@ -215,6 +215,18 @@ public class ProductsControllerBase : ControllerBase
         {
             await file.CopyToAsync(stream);
         }
+
+        //read content from file
+        // string fileContent = "";
+        // using (var reader = new StreamReader(file.OpenReadStream()))
+        // {
+        //     string content = await reader.ReadToEndAsync();
+        //     fileContent += content;
+        // }
+        // Console.WriteLine(fileContent);
+        // _commentService.saveText(fileContent);
+
+        //
         var fileUrl = $"{Request.Scheme}://{Request.Host}/uploads/{file.FileName}";
         return Ok(new
         {
