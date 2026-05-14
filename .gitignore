@@ -128,3 +128,4 @@ package-lock.json
 *.sln
 *.csproj
 uploads
+appsettings.json
